@@ -4,291 +4,212 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Packaging Design Editor</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Cinzel:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Cinzel:wght@700&family=DM+Sans:wght@300;400;500;600&family=Montserrat:wght@400;600;700&family=Raleway:wght@400;600;700&family=Oswald:wght@400;600;700&family=Lora:wght@400;600;700&family=Bebas+Neue&family=Nunito:wght@400;600;700&family=Poppins:wght@400;600;700&family=Dancing+Script:wght@700&family=Abril+Fatface&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #f0f3f8;
-  --white: #ffffff;
-  --border: #dde2ea;
-  --blue: #0055b3;
-  --blue-light: #e8f0fb;
-  --gold: #c9a84c;
-  --text: #1a2233;
-  --muted: #6b7a99;
-  --green: #1a7a3c;
-  --red: #c0392b;
+  --bg:#f0f3f8; --white:#fff; --border:#dde2ea;
+  --blue:#0055b3; --blue-light:#e8f0fb;
+  --gold:#c9a84c; --text:#1a2233; --muted:#6b7a99;
+  --green:#1a7a3c; --red:#c0392b;
 }
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
 
 /* TOP BAR */
-.topbar {
-  background: var(--blue);
-  padding: 0 28px;
-  height: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.topbar-left { display: flex; align-items: center; gap: 14px; }
-.topbar h1 { font-family: 'Cinzel', serif; font-size: 15px; color: #fff; letter-spacing: 2px; }
-.topbar-tag { font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 1px; background: rgba(255,255,255,0.1); padding: 3px 10px; border-radius: 20px; }
-.add-design-btn {
-  padding: 8px 18px;
-  background: linear-gradient(90deg, #a07830, #e0c060, #c9a84c);
-  border: none; border-radius: 6px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 12px; font-weight: 700;
-  color: #1a0a00; cursor: pointer;
-  transition: transform .15s, box-shadow .15s;
-}
-.add-design-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(201,168,76,0.4); }
+.topbar{background:var(--blue);padding:0 28px;height:52px;display:flex;align-items:center;justify-content:space-between;}
+.topbar-left{display:flex;align-items:center;gap:14px;}
+.topbar h1{font-family:'Cinzel',serif;font-size:15px;color:#fff;letter-spacing:2px;}
+.topbar-tag{font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:1px;background:rgba(255,255,255,0.1);padding:3px 10px;border-radius:20px;}
+.add-btn{padding:8px 18px;background:linear-gradient(90deg,#a07830,#e0c060,#c9a84c);border:none;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;color:#1a0a00;cursor:pointer;transition:transform .15s,box-shadow .15s;}
+.add-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(201,168,76,0.4);}
 
 /* TABS */
-.tabs-bar {
-  background: var(--white);
-  border-bottom: 2px solid var(--border);
-  padding: 0 28px;
-  display: flex;
-  align-items: flex-end;
-  gap: 4px;
-  overflow-x: auto;
-}
-.tab {
-  padding: 10px 18px 10px;
-  font-size: 13px; font-weight: 500;
-  color: var(--muted);
-  cursor: pointer;
-  border-bottom: 3px solid transparent;
-  margin-bottom: -2px;
-  white-space: nowrap;
-  display: flex; align-items: center; gap: 8px;
-  transition: color .2s, border-color .2s;
-  user-select: none;
-}
-.tab:hover { color: var(--blue); }
-.tab.active { color: var(--blue); border-bottom-color: var(--blue); font-weight: 600; }
-.tab-close {
-  font-size: 14px; color: var(--muted);
-  line-height: 1; padding: 0 2px;
-  border-radius: 50%;
-  transition: background .15s, color .15s;
-}
-.tab-close:hover { background: #fde8e8; color: var(--red); }
+.tabs-bar{background:var(--white);border-bottom:2px solid var(--border);padding:0 28px;display:flex;align-items:flex-end;gap:4px;overflow-x:auto;}
+.tab{padding:10px 18px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;display:flex;align-items:center;gap:8px;transition:color .2s,border-color .2s;user-select:none;}
+.tab:hover{color:var(--blue);}
+.tab.active{color:var(--blue);border-bottom-color:var(--blue);font-weight:600;}
+.tab-close{font-size:15px;color:var(--muted);line-height:1;padding:0 2px;border-radius:50%;transition:background .15s,color .15s;}
+.tab-close:hover{background:#fde8e8;color:var(--red);}
 
-/* DESIGN PANELS */
-.design-panels { display: none; }
-.design-panels.active { display: flex; height: calc(100vh - 52px - 46px); }
+/* PANELS */
+.design-panels{display:none;}
+.design-panels.active{display:flex;height:calc(100vh - 52px - 46px);}
 
 /* FORM SIDE */
-.form-side {
-  width: 460px;
-  min-width: 460px;
-  background: var(--white);
-  border-right: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-.form-header {
-  padding: 18px 24px 14px;
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between;
-}
-.form-header h2 { font-size: 15px; font-weight: 600; }
-.form-header .design-name-input {
-  font-size: 15px; font-weight: 600;
-  border: none; outline: none;
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  background: transparent;
-  width: 100%;
-}
-.form-header .design-name-input:focus { border-bottom: 2px solid var(--blue); }
-.form-scroll { flex: 1; overflow-y: auto; padding: 18px 24px 80px; }
+.form-side{width:480px;min-width:480px;background:var(--white);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;}
+.form-header{padding:16px 24px 12px;border-bottom:1px solid var(--border);}
+.design-name-input{font-size:15px;font-weight:600;border:none;outline:none;color:var(--text);font-family:'DM Sans',sans-serif;background:transparent;width:100%;border-bottom:2px solid transparent;transition:border-color .2s;}
+.design-name-input:focus{border-bottom-color:var(--blue);}
+.form-scroll{flex:1;overflow-y:auto;padding:16px 24px 90px;}
 
 /* FIELDS */
-.fg { display: grid; gap: 10px; margin-bottom: 10px; }
-.fg-2 { grid-template-columns: 1fr 1fr; }
-.fg-1 { grid-template-columns: 1fr; }
-.fg-3 { grid-template-columns: 1fr 1fr 1fr; }
-.field { display: flex; flex-direction: column; gap: 4px; }
-.field label { font-size: 10px; font-weight: 600; color: var(--muted); letter-spacing: 0.8px; text-transform: uppercase; }
-.field input, .field textarea {
-  padding: 8px 10px;
-  border: 1.5px solid var(--border);
-  border-radius: 6px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 12.5px;
-  color: var(--text);
-  background: #fff;
-  transition: border-color .2s;
-  resize: vertical;
-}
-.field input:focus, .field textarea:focus {
-  outline: none; border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(0,85,179,0.08);
-}
-.field textarea { min-height: 60px; }
-.sec-title {
-  font-size: 11px; font-weight: 700; color: var(--blue);
-  letter-spacing: 1.5px; text-transform: uppercase;
-  margin: 16px 0 8px;
-  padding-bottom: 5px;
-  border-bottom: 1px solid var(--blue-light);
-}
-.ing-group { display: flex; flex-direction: column; gap: 6px; }
-.ing-row { display: flex; gap: 6px; align-items: center; }
-.ing-row input:first-child { flex: 2; }
-.ing-row input:last-child  { flex: 1; }
-.ing-del {
-  width: 22px; height: 22px; border: none; border-radius: 50%;
-  background: #fde8e8; color: var(--red);
-  font-size: 14px; cursor: pointer; line-height: 1;
-  flex-shrink: 0; transition: background .15s;
-}
-.ing-del:hover { background: #f5b7b1; }
-.add-ing-btn {
-  margin-top: 6px;
-  padding: 6px 12px;
-  background: var(--blue-light);
-  border: 1px solid #c0d3f0;
-  border-radius: 5px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 11px; font-weight: 600;
-  color: var(--blue); cursor: pointer;
-  align-self: flex-start;
-  transition: background .15s;
-}
-.add-ing-btn:hover { background: #d0e4f8; }
+.fg{display:grid;gap:10px;margin-bottom:10px;}
+.fg-2{grid-template-columns:1fr 1fr;}
+.fg-1{grid-template-columns:1fr;}
+.field{display:flex;flex-direction:column;gap:4px;}
+.field label{font-size:10px;font-weight:600;color:var(--muted);letter-spacing:0.8px;text-transform:uppercase;}
+.field input,.field textarea,.field select{padding:8px 10px;border:1.5px solid var(--border);border-radius:6px;font-family:'DM Sans',sans-serif;font-size:12.5px;color:var(--text);background:#fff;transition:border-color .2s;resize:vertical;}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,85,179,0.08);}
+.field textarea{min-height:58px;}
+.sec-title{font-size:11px;font-weight:700;color:var(--blue);letter-spacing:1.5px;text-transform:uppercase;margin:18px 0 8px;padding-bottom:5px;border-bottom:1px solid var(--blue-light);}
+.ing-group{display:flex;flex-direction:column;gap:6px;}
+.ing-row{display:flex;gap:6px;align-items:center;}
+.ing-row input:first-child{flex:2;}
+.ing-row input:last-child{flex:1;}
+.ing-del{width:24px;height:24px;border:none;border-radius:50%;background:#fde8e8;color:var(--red);font-size:15px;cursor:pointer;flex-shrink:0;transition:background .15s;}
+.ing-del:hover{background:#f5b7b1;}
+.add-ing-btn{margin-top:6px;padding:6px 12px;background:var(--blue-light);border:1px solid #c0d3f0;border-radius:5px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:var(--blue);cursor:pointer;align-self:flex-start;}
+.add-ing-btn:hover{background:#d0e4f8;}
 
-/* FORM FOOTER BUTTONS */
-.form-footer {
-  position: sticky; bottom: 0;
-  background: var(--white);
-  border-top: 1px solid var(--border);
-  padding: 12px 24px;
-  display: flex; gap: 10px;
+/* ── LOGO UPLOAD BOX ── */
+.logo-upload-area{
+  border:2px dashed var(--border);
+  border-radius:8px;
+  padding:16px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+  cursor:pointer;
+  transition:border-color .2s, background .2s;
+  position:relative;
 }
-.fbtn {
-  flex: 1; padding: 10px;
-  border: none; border-radius: 7px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 12.5px; font-weight: 600;
-  cursor: pointer;
-  transition: transform .15s, box-shadow .15s;
+.logo-upload-area:hover{border-color:var(--blue);background:var(--blue-light);}
+.logo-upload-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.logo-preview-img{max-width:120px;max-height:60px;object-fit:contain;border-radius:4px;display:none;}
+.logo-preview-img.has-logo{display:block;}
+.logo-placeholder{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.logo-placeholder-icon{font-size:28px;}
+.logo-placeholder-text{font-size:11px;color:var(--muted);text-align:center;font-weight:500;}
+.logo-clear-btn{padding:4px 10px;background:#fde8e8;color:var(--red);border:none;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer;z-index:1;}
+.logo-clear-btn:hover{background:#f5b7b1;}
+.logo-filename{font-size:10px;color:var(--blue);font-weight:600;}
+
+/* ── FONT SELECTOR ── */
+.font-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px;}
+.font-option{
+  border:2px solid var(--border);
+  border-radius:7px;
+  padding:10px 10px 8px;
+  cursor:pointer;
+  transition:border-color .2s,background .2s;
+  text-align:center;
 }
-.fbtn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
-.fbtn:active { transform: scale(.98); }
-.fbtn-blue { background: var(--blue); color: #fff; }
-.fbtn-gold {
-  background: linear-gradient(90deg, #a07830, #e0c060, #c9a84c);
-  color: #1a0a00;
-}
+.font-option:hover{border-color:var(--blue);background:var(--blue-light);}
+.font-option.selected{border-color:var(--blue);background:var(--blue-light);}
+.font-option .font-sample{font-size:17px;color:var(--text);line-height:1.2;margin-bottom:3px;}
+.font-option .font-label{font-size:9px;color:var(--muted);font-weight:600;letter-spacing:0.5px;text-transform:uppercase;}
+
+/* FORM FOOTER */
+.form-footer{position:sticky;bottom:0;background:var(--white);border-top:1px solid var(--border);padding:12px 24px;display:flex;gap:10px;}
+.fbtn{flex:1;padding:10px;border:none;border-radius:7px;font-family:'DM Sans',sans-serif;font-size:12.5px;font-weight:600;cursor:pointer;transition:transform .15s,box-shadow .15s;}
+.fbtn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.12);}
+.fbtn:active{transform:scale(.98);}
+.fbtn-blue{background:var(--blue);color:#fff;}
+.fbtn-gold{background:linear-gradient(90deg,#a07830,#e0c060,#c9a84c);color:#1a0a00;}
 
 /* PREVIEW SIDE */
-.preview-side {
-  flex: 1;
-  background: linear-gradient(135deg, #0d1b35 0%, #1a2a4a 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 32px 20px;
-  overflow: auto;
-  gap: 20px;
-}
-.preview-tag { font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: 2px; text-transform: uppercase; }
+.preview-side{flex:1;background:linear-gradient(135deg,#0d1b35 0%,#1a2a4a 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 20px;overflow:auto;gap:18px;}
+.preview-tag{font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:2px;text-transform:uppercase;}
 
-/* BOX COMPONENT STYLES */
-.box-wrap { display: flex; align-items: flex-start; filter: drop-shadow(0 18px 45px rgba(0,0,0,0.7)); }
-.flap { height: 52px; background: linear-gradient(180deg,#002460,#003a8c); border: 1px solid rgba(77,184,255,0.25); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 2px; }
-.box-panel { background: linear-gradient(170deg,#002d6b 0%,#0055b3 45%,#0066cc 75%,#002d6b 100%); border: 1px solid rgba(77,184,255,0.2); position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; }
-.gstrip { background: linear-gradient(90deg,#a07830,#e0c060,#c9a84c,#e0c060,#a07830); width: 100%; padding: 3px 6px; text-align: center; font-size: 6.5px; font-weight: 700; letter-spacing: 1.5px; color: #1a0a00; text-transform: uppercase; }
-.rxbadge { border: 2px solid #c9a84c; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.07); }
-.box-wave { position: absolute; bottom: 0; left: 0; right: 0; height: 65px; opacity: 0.2; pointer-events: none; }
-.bdot { position: absolute; border-radius: 50%; background: rgba(77,184,255,0.1); pointer-events: none; }
-.bbrand { font-family: 'Playfair Display', serif; font-weight: 900; color: #fff; text-shadow: 0 2px 6px rgba(0,0,0,0.4); }
-.bsub { font-family: 'Cinzel', serif; letter-spacing: 3px; color: #c9a84c; text-transform: uppercase; }
-.bshim { width: 75%; height: 1px; background: linear-gradient(90deg,transparent,#c9a84c,transparent); margin: 4px auto; }
-.bqbadge { border: 1.5px solid #c9a84c; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(255,255,255,0.07); }
-.bcarea { width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(77,184,255,0.25); border-radius: 3px; padding: 5px; display: flex; flex-direction: column; align-items: center; }
-.bpill { border: 1px dashed rgba(77,184,255,0.3); border-radius: 5px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: rgba(0,20,60,0.35); }
+/* BOX STYLES */
+.box-wrap{display:flex;align-items:flex-start;filter:drop-shadow(0 18px 45px rgba(0,0,0,0.7));}
+.flap{height:52px;background:linear-gradient(180deg,#002460,#003a8c);border:1px solid rgba(77,184,255,0.25);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px;}
+.box-panel{background:linear-gradient(170deg,#002d6b 0%,#0055b3 45%,#0066cc 75%,#002d6b 100%);border:1px solid rgba(77,184,255,0.2);position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;}
+.gstrip{background:linear-gradient(90deg,#a07830,#e0c060,#c9a84c,#e0c060,#a07830);width:100%;padding:3px 6px;text-align:center;font-size:6.5px;font-weight:700;letter-spacing:1.5px;color:#1a0a00;text-transform:uppercase;}
+.rxbadge{border:2px solid #c9a84c;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.07);}
+.box-wave{position:absolute;bottom:0;left:0;right:0;height:65px;opacity:0.2;pointer-events:none;}
+.bdot{position:absolute;border-radius:50%;background:rgba(77,184,255,0.1);pointer-events:none;}
+.bshim{width:75%;height:1px;background:linear-gradient(90deg,transparent,#c9a84c,transparent);margin:4px auto;}
+.bqbadge{border:1.5px solid #c9a84c;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(255,255,255,0.07);}
+.bcarea{width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(77,184,255,0.25);border-radius:3px;padding:5px;display:flex;flex-direction:column;align-items:center;}
+.bpill{border:1px dashed rgba(77,184,255,0.3);border-radius:5px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(0,20,60,0.35);}
 </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
 <div class="topbar">
   <div class="topbar-left">
     <h1>PACKAGING EDITOR</h1>
     <span class="topbar-tag">Abraham Prescription</span>
   </div>
-  <button class="add-design-btn" onclick="addNewDesign()">+ Add New Design</button>
+  <button class="add-btn" onclick="addNewDesign()">+ Add New Design</button>
 </div>
 
-<!-- TABS -->
 <div class="tabs-bar" id="tabsBar"></div>
-
-<!-- ALL DESIGN PANELS rendered here -->
 <div id="designsRoot"></div>
 
 <script>
 // ─────────────────────────────────────────────────────────────────
+// FONTS
+// ─────────────────────────────────────────────────────────────────
+var FONTS = [
+  { key:'playfair',  label:'Playfair Display', css:"'Playfair Display',serif",   sample:'Abraham' },
+  { key:'cinzel',    label:'Cinzel',            css:"'Cinzel',serif",             sample:'Abraham' },
+  { key:'montserrat',label:'Montserrat',        css:"'Montserrat',sans-serif",    sample:'Abraham' },
+  { key:'raleway',   label:'Raleway',           css:"'Raleway',sans-serif",       sample:'Abraham' },
+  { key:'oswald',    label:'Oswald',            css:"'Oswald',sans-serif",        sample:'Abraham' },
+  { key:'lora',      label:'Lora',              css:"'Lora',serif",               sample:'Abraham' },
+  { key:'bebas',     label:'Bebas Neue',        css:"'Bebas Neue',sans-serif",    sample:'Abraham' },
+  { key:'nunito',    label:'Nunito',            css:"'Nunito',sans-serif",        sample:'Abraham' },
+  { key:'poppins',   label:'Poppins',           css:"'Poppins',sans-serif",       sample:'Abraham' },
+  { key:'dancing',   label:'Dancing Script',    css:"'Dancing Script',cursive",   sample:'Abraham' },
+  { key:'abril',     label:'Abril Fatface',     css:"'Abril Fatface',serif",      sample:'Abraham' },
+  { key:'dmsans',    label:'DM Sans',           css:"'DM Sans',sans-serif",       sample:'Abraham' }
+];
+
+// ─────────────────────────────────────────────────────────────────
 // STATE
 // ─────────────────────────────────────────────────────────────────
-var designs = [];   // array of { id, name, data }
+var designs  = [];
 var activeId = null;
 var nextId   = 1;
+var logoData = {};   // { designId: base64DataURL }
 
 // ─────────────────────────────────────────────────────────────────
 // DEFAULT DATA
 // ─────────────────────────────────────────────────────────────────
 function defaultData(label) {
   return {
-    name:      label || 'Design',
-    brand:     'Abraham',
-    qty:       '20Q',
-    ptype:     'Medicated Ointment',
-    volume:    '20 ml',
-    effective: 'Effective Result',
-    mrp:       '520 CAD',
-    batch:     'MFG-CAN-AB-2459',
-    mfgdate:   'April 2026',
-    expdate:   'C000G25b',
-    expmy:     'May 2026',
-    storage:   'Store in a cool and dry place.',
-    usage:     'Apply a thin layer to the affected area twice daily or as directed by a healthcare professional.',
-    marketed:  'Prairie Wellness Biocare Inc.\n840 7 Avenue SW, Suite 1200\nCalgary, AB T2P 3G2\nCanada',
-    mfgby:     'Calgary Dermacare Manufacturing Ltd.\n2210 32 Avenue NE\nCalgary, AB T2E 6T4\nCanada',
-    mktaddr:   '840 7 Avenue SW, Calgary, AB T2P 3G2, Canada',
-    ingredients: [
-      { name: 'Aloe Vera Extract',  amount: '20%' },
-      { name: 'Salicylic Acid',     amount: '10%' },
-      { name: 'Calcium Carbonate',  amount: '30%' },
-      { name: 'Zinc Oxide',         amount: '25%' },
-      { name: 'Vitamin E Oil',      amount: '10%' }
+    name:'Design ' + nextId,
+    brand:'Abraham', qty:'20Q', ptype:'Medicated Ointment',
+    volume:'20 ml', effective:'Effective Result', mrp:'520 CAD',
+    batch:'MFG-CAN-AB-2459', mfgdate:'April 2026',
+    expdate:'C000G25b', expmy:'May 2026',
+    storage:'Store in a cool and dry place.',
+    usage:'Apply a thin layer to the affected area twice daily.',
+    marketed:'Prairie Wellness Biocare Inc.\n840 7 Ave SW, Suite 1200\nCalgary, AB T2P 3G2\nCanada',
+    mfgby:'Calgary Dermacare Manufacturing Ltd.\n2210 32 Avenue NE\nCalgary, AB T2E 6T4\nCanada',
+    mktaddr:'840 7 Avenue SW, Calgary, AB T2P 3G2, Canada',
+    fontKey:'playfair',
+    ingredients:[
+      {name:'Aloe Vera Extract',amount:'20%'},
+      {name:'Salicylic Acid',   amount:'10%'},
+      {name:'Calcium Carbonate',amount:'30%'},
+      {name:'Zinc Oxide',       amount:'25%'},
+      {name:'Vitamin E Oil',    amount:'10%'}
     ]
   };
 }
 
 // ─────────────────────────────────────────────────────────────────
-// ADD / REMOVE / SWITCH DESIGNS
+// ADD / REMOVE / SWITCH
 // ─────────────────────────────────────────────────────────────────
 function addNewDesign(customData) {
   var id   = nextId++;
-  var name = customData ? customData.name : ('Design ' + id);
-  var data = customData || defaultData(name);
-  data.name = name;
-  designs.push({ id: id, name: name, data: data });
+  var data = customData || defaultData();
+  data.name = data.name || ('Design ' + id);
+  designs.push({ id:id, name:data.name, data:data });
+  logoData[id] = customData && customData._logo ? customData._logo : null;
   renderTabsBar();
   renderAllPanels();
   switchToDesign(id);
 }
 
 function removeDesign(id) {
-  if (designs.length <= 1) return; // keep at least one
+  if (designs.length <= 1) return;
   designs = designs.filter(function(d){ return d.id !== id; });
+  delete logoData[id];
   if (activeId === id) activeId = designs[0].id;
   renderTabsBar();
   renderAllPanels();
@@ -297,18 +218,16 @@ function removeDesign(id) {
 
 function switchToDesign(id) {
   activeId = id;
-  // update tab active states
-  document.querySelectorAll('.tab').forEach(function(t) {
+  document.querySelectorAll('.tab').forEach(function(t){
     t.classList.toggle('active', parseInt(t.dataset.id) === id);
   });
-  // show/hide panels
-  document.querySelectorAll('.design-panels').forEach(function(p) {
+  document.querySelectorAll('.design-panels').forEach(function(p){
     p.classList.toggle('active', parseInt(p.dataset.id) === id);
   });
 }
 
 // ─────────────────────────────────────────────────────────────────
-// RENDER TABS
+// TABS
 // ─────────────────────────────────────────────────────────────────
 function renderTabsBar() {
   var bar = document.getElementById('tabsBar');
@@ -325,36 +244,28 @@ function renderTabsBar() {
 }
 
 // ─────────────────────────────────────────────────────────────────
-// RENDER ALL PANELS
+// PANELS
 // ─────────────────────────────────────────────────────────────────
 function renderAllPanels() {
   var root = document.getElementById('designsRoot');
   root.innerHTML = '';
-  designs.forEach(function(d) {
-    root.appendChild(buildPanel(d));
-  });
+  designs.forEach(function(d){ root.appendChild(buildPanel(d)); });
 }
 
-// ─────────────────────────────────────────────────────────────────
-// BUILD ONE DESIGN PANEL (form + preview)
-// ─────────────────────────────────────────────────────────────────
 function buildPanel(design) {
   var id = design.id;
   var d  = design.data;
-
   var wrapper = document.createElement('div');
   wrapper.className = 'design-panels' + (id === activeId ? ' active' : '');
   wrapper.dataset.id = id;
 
-  // ── FORM SIDE ──
   var formSide = document.createElement('div');
   formSide.className = 'form-side';
-  formSide.innerHTML = formHTML(id, d);
+  formSide.innerHTML = buildFormHTML(id, d);
 
-  // ── PREVIEW SIDE ──
   var previewSide = document.createElement('div');
   previewSide.className = 'preview-side';
-  previewSide.innerHTML = '<div class="preview-tag">Live Preview — ' + esc(d.name) + '</div>'
+  previewSide.innerHTML = '<div class="preview-tag" id="ptag_' + id + '">Live Preview — ' + esc(d.name) + '</div>'
     + '<div class="box-wrap" id="preview_' + id + '"></div>';
 
   wrapper.appendChild(formSide);
@@ -365,78 +276,108 @@ function buildPanel(design) {
 // ─────────────────────────────────────────────────────────────────
 // FORM HTML
 // ─────────────────────────────────────────────────────────────────
-function formHTML(id, d) {
+function buildFormHTML(id, d) {
+  // ingredient rows
   var ings = '';
-  (d.ingredients || []).forEach(function(ing, i) {
+  (d.ingredients||[]).forEach(function(ing){
     ings += ingRowHTML(id, ing.name, ing.amount);
   });
 
-  return '<div class="form-header">'
-    + '<input class="design-name-input" id="name_' + id + '" value="' + esc(d.name) + '" oninput="onNameChange(' + id + ')" placeholder="Design name">'
+  // font options
+  var fontOpts = '';
+  FONTS.forEach(function(f){
+    var sel = (d.fontKey === f.key) ? ' selected' : '';
+    fontOpts += '<div class="font-option' + sel + '" data-font="' + f.key + '" onclick="selectFont(' + id + ',\'' + f.key + '\',this)" style="font-family:' + f.css + ';">'
+      + '<div class="font-sample" style="font-family:' + f.css + ';">' + f.sample + '</div>'
+      + '<div class="font-label">' + f.label + '</div>'
+      + '</div>';
+  });
+
+  // logo area
+  var logoHasClass = (logoData[id]) ? ' has-logo' : '';
+  var logoSrc      = logoData[id]   ? logoData[id] : '';
+
+  return ''
+    + '<div class="form-header">'
+    +   '<input class="design-name-input" id="name_' + id + '" value="' + esc(d.name) + '" oninput="onNameChange(' + id + ')" placeholder="Design name">'
     + '</div>'
     + '<div class="form-scroll">'
 
+    // ── Basic fields ──
     + '<div class="fg fg-2">'
-    + field('Brand Name',    'brand_'    + id, d.brand)
-    + field('Quantity',      'qty_'      + id, d.qty)
+    +   f('Brand Name',   'brand_'    +id, d.brand)
+    +   f('Quantity',     'qty_'      +id, d.qty)
     + '</div>'
     + '<div class="fg fg-2">'
-    + field('Product Type',  'ptype_'    + id, d.ptype)
-    + field('Volume/Weight', 'volume_'   + id, d.volume)
+    +   f('Product Type', 'ptype_'    +id, d.ptype)
+    +   f('Volume/Weight','volume_'   +id, d.volume)
     + '</div>'
     + '<div class="fg fg-2">'
-    + field('Effective Text','effective_'+ id, d.effective)
-    + field('MRP / Price',   'mrp_'      + id, d.mrp)
+    +   f('Effective Text','effective_'+id, d.effective)
+    +   f('MRP / Price',  'mrp_'      +id, d.mrp)
     + '</div>'
     + '<div class="fg fg-2">'
-    + field('Batch No.',     'batch_'    + id, d.batch)
-    + field('Mfg. Date',     'mfgdate_'  + id, d.mfgdate)
+    +   f('Batch No.',    'batch_'    +id, d.batch)
+    +   f('Mfg. Date',    'mfgdate_'  +id, d.mfgdate)
     + '</div>'
     + '<div class="fg fg-2">'
-    + field('Exp. Code',     'expdate_'  + id, d.expdate)
-    + field('Exp. Date',     'expmy_'    + id, d.expmy)
+    +   f('Exp. Code',    'expdate_'  +id, d.expdate)
+    +   f('Exp. Date',    'expmy_'    +id, d.expmy)
     + '</div>'
 
+    // ── LOGO SECTION ──
+    + '<div class="sec-title">Company Logo</div>'
+    + '<div class="logo-upload-area" id="logoArea_' + id + '" onclick="triggerLogoInput(' + id + ')">'
+    +   '<input type="file" id="logoInput_' + id + '" accept="image/*" onchange="onLogoChange(' + id + ',event)" style="display:none;">'
+    +   '<img id="logoImg_' + id + '" src="' + logoSrc + '" class="logo-preview-img' + logoHasClass + '" alt="Logo">'
+    +   '<div class="logo-placeholder" id="logoPlaceholder_' + id + '" style="' + (logoData[id] ? 'display:none;' : '') + '">'
+    +     '<div class="logo-placeholder-icon">🖼️</div>'
+    +     '<div class="logo-placeholder-text">Click to upload logo<br><span style="color:#aaa;font-size:10px;">PNG, JPG, SVG supported</span></div>'
+    +   '</div>'
+    +   (logoData[id] ? '<div class="logo-filename" id="logoName_' + id + '">Logo uploaded ✓</div>' : '<div class="logo-filename" id="logoName_' + id + '"></div>')
+    + '</div>'
+    + (logoData[id]
+      ? '<button class="logo-clear-btn" style="margin-top:6px;" onclick="clearLogo(' + id + ')">✕ Remove Logo</button>'
+      : '<span id="logoClearBtn_' + id + '"></span>')
+
+    // ── FONT SECTION ──
+    + '<div class="sec-title">Brand Font</div>'
+    + '<div class="font-grid" id="fontGrid_' + id + '">' + fontOpts + '</div>'
+
+    // ── Storage / Usage ──
     + '<div class="sec-title">Storage &amp; Usage</div>'
-    + '<div class="fg fg-1">'
-    + fieldTA('Storage Instructions', 'storage_' + id, d.storage)
-    + '</div>'
-    + '<div class="fg fg-1">'
-    + fieldTA('Usage Instructions',   'usage_'   + id, d.usage)
-    + '</div>'
+    + '<div class="fg fg-1">' + fta('Storage Instructions','storage_'+id,d.storage) + '</div>'
+    + '<div class="fg fg-1">' + fta('Usage Instructions',  'usage_'   +id,d.usage)   + '</div>'
 
+    // ── Ingredients ──
     + '<div class="sec-title">Ingredients</div>'
     + '<div class="ing-group" id="ingGroup_' + id + '">' + ings + '</div>'
-    + '<button class="add-ing-btn" onclick="addIngredientRow(' + id + ')">+ Add Ingredient</button>'
+    + '<button class="add-ing-btn" onclick="addIngRow(' + id + ')">+ Add Ingredient</button>'
 
+    // ── Company ──
     + '<div class="sec-title">Company Details</div>'
-    + '<div class="fg fg-1">'
-    + fieldTA('Marketed By',          'marketed_'  + id, d.marketed)
-    + '</div>'
-    + '<div class="fg fg-1">'
-    + fieldTA('Manufactured By',      'mfgby_'     + id, d.mfgby)
-    + '</div>'
-    + '<div class="fg fg-1">'
-    + field('Marketed Address (short)', 'mktaddr_' + id, d.mktaddr)
-    + '</div>'
+    + '<div class="fg fg-1">' + fta('Marketed By',    'marketed_'+id, d.marketed) + '</div>'
+    + '<div class="fg fg-1">' + fta('Manufactured By','mfgby_'   +id, d.mfgby)    + '</div>'
+    + '<div class="fg fg-1">' + f('Short Address',    'mktaddr_' +id, d.mktaddr)   + '</div>'
 
     + '</div>' // end form-scroll
 
     + '<div class="form-footer">'
-    + '<button class="fbtn fbtn-blue" onclick="liveUpdate(' + id + ')">&#9654; Update Preview</button>'
-    + '<button class="fbtn fbtn-gold" onclick="downloadDesign(' + id + ')">&#11015; Download HTML</button>'
+    +   '<button class="fbtn fbtn-blue" onclick="liveUpdate(' + id + ')">&#9654; Update Preview</button>'
+    +   '<button class="fbtn fbtn-gold" onclick="downloadDesign(' + id + ')">&#11015; Download HTML</button>'
     + '</div>';
 }
 
-function field(label, inputId, value) {
+function f(label, fid, value) {
+  var id = fid.split('_').pop();
   return '<div class="field"><label>' + label + '</label>'
-    + '<input id="' + inputId + '" value="' + esc(value) + '" oninput="liveUpdate(' + inputId.split('_').pop() + ')">'
+    + '<input id="' + fid + '" value="' + esc(value) + '" oninput="liveUpdate(' + id + ')">'
     + '</div>';
 }
-function fieldTA(label, inputId, value) {
-  var id = inputId.split('_').pop();
+function fta(label, fid, value) {
+  var id = fid.split('_').pop();
   return '<div class="field"><label>' + label + '</label>'
-    + '<textarea id="' + inputId + '" oninput="liveUpdate(' + id + ')">' + esc(value) + '</textarea>'
+    + '<textarea id="' + fid + '" oninput="liveUpdate(' + id + ')">' + esc(value) + '</textarea>'
     + '</div>';
 }
 function ingRowHTML(designId, name, amount) {
@@ -448,13 +389,80 @@ function ingRowHTML(designId, name, amount) {
 }
 
 // ─────────────────────────────────────────────────────────────────
+// LOGO HANDLERS
+// ─────────────────────────────────────────────────────────────────
+function triggerLogoInput(id) {
+  document.getElementById('logoInput_' + id).click();
+}
+
+function onLogoChange(id, event) {
+  var file = event.target.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    logoData[id] = e.target.result;
+
+    var img = document.getElementById('logoImg_' + id);
+    img.src = e.target.result;
+    img.classList.add('has-logo');
+
+    document.getElementById('logoPlaceholder_' + id).style.display = 'none';
+    document.getElementById('logoName_' + id).textContent = '✓ ' + file.name;
+
+    // show clear button
+    var cb = document.getElementById('logoClearBtn_' + id);
+    if (cb) {
+      cb.outerHTML = '<button class="logo-clear-btn" id="logoClearBtn_' + id + '" style="margin-top:6px;" onclick="clearLogo(' + id + ')">✕ Remove Logo</button>';
+    }
+
+    liveUpdate(id);
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearLogo(id) {
+  logoData[id] = null;
+  var img = document.getElementById('logoImg_' + id);
+  if (img) { img.src = ''; img.classList.remove('has-logo'); }
+  var ph = document.getElementById('logoPlaceholder_' + id);
+  if (ph) ph.style.display = 'flex';
+  var nm = document.getElementById('logoName_' + id);
+  if (nm) nm.textContent = '';
+  var inp = document.getElementById('logoInput_' + id);
+  if (inp) inp.value = '';
+  liveUpdate(id);
+}
+
+// ─────────────────────────────────────────────────────────────────
+// FONT SELECTION
+// ─────────────────────────────────────────────────────────────────
+function selectFont(id, fontKey, el) {
+  // deselect all in this grid
+  document.querySelectorAll('#fontGrid_' + id + ' .font-option').forEach(function(opt){
+    opt.classList.remove('selected');
+  });
+  el.classList.add('selected');
+
+  // store on design data
+  var design = designs.find(function(d){ return d.id === id; });
+  if (design) design.data.fontKey = fontKey;
+
+  liveUpdate(id);
+}
+
+function getFontCSS(fontKey) {
+  var font = FONTS.find(function(f){ return f.key === fontKey; });
+  return font ? font.css : "'Playfair Display',serif";
+}
+
+// ─────────────────────────────────────────────────────────────────
 // ADD INGREDIENT ROW
 // ─────────────────────────────────────────────────────────────────
-function addIngredientRow(id) {
-  var group = document.getElementById('ingGroup_' + id);
+function addIngRow(id) {
+  var g   = document.getElementById('ingGroup_' + id);
   var div = document.createElement('div');
   div.innerHTML = ingRowHTML(id, '', '');
-  group.appendChild(div.firstChild);
+  g.appendChild(div.firstChild);
 }
 
 // ─────────────────────────────────────────────────────────────────
@@ -464,84 +472,96 @@ function onNameChange(id) {
   var val = document.getElementById('name_' + id).value;
   var design = designs.find(function(d){ return d.id === id; });
   if (design) design.name = val;
-  // update tab label
-  var tab = document.querySelector('.tab[data-id="' + id + '"] .tab-name');
-  if (tab) tab.textContent = val;
-  // update preview tag
-  var ptag = document.querySelector('#preview_' + id);
-  if (ptag && ptag.previousSibling) ptag.previousSibling.textContent = 'Live Preview — ' + val;
+  var tabName = document.querySelector('.tab[data-id="' + id + '"] .tab-name');
+  if (tabName) tabName.textContent = val;
+  var ptag = document.getElementById('ptag_' + id);
+  if (ptag) ptag.textContent = 'Live Preview — ' + val;
 }
 
 // ─────────────────────────────────────────────────────────────────
-// COLLECT DATA FROM FORM FOR A GIVEN DESIGN ID
+// COLLECT DATA
 // ─────────────────────────────────────────────────────────────────
 function collectData(id) {
-  function v(suffix) {
-    var el = document.getElementById(suffix + '_' + id);
-    return el ? el.value.trim() : '';
-  }
+  function v(p) { var el = document.getElementById(p + '_' + id); return el ? el.value.trim() : ''; }
   var ings = [];
-  var rows = document.querySelectorAll('#ingGroup_' + id + ' .ing-row');
-  rows.forEach(function(row) {
+  document.querySelectorAll('#ingGroup_' + id + ' .ing-row').forEach(function(row){
     var inputs = row.querySelectorAll('input');
-    if (inputs[0] && inputs[0].value.trim()) {
+    if (inputs[0] && inputs[0].value.trim())
       ings.push({ name: inputs[0].value.trim(), amount: inputs[1] ? inputs[1].value.trim() : '' });
-    }
   });
+
+  // current font key
+  var selFont = document.querySelector('#fontGrid_' + id + ' .font-option.selected');
+  var fontKey = selFont ? selFont.dataset.font : 'playfair';
+
   return {
-    name:        v('name')      || 'Design',
-    brand:       v('brand')     || 'Brand',
-    qty:         v('qty')       || '',
-    ptype:       v('ptype')     || '',
-    volume:      v('volume')    || '',
-    effective:   v('effective') || '',
-    mrp:         v('mrp')       || '',
-    batch:       v('batch')     || '',
-    mfgdate:     v('mfgdate')   || '',
-    expdate:     v('expdate')   || '',
-    expmy:       v('expmy')     || '',
-    storage:     v('storage')   || '',
-    usage:       v('usage')     || '',
-    marketed:    v('marketed')  || '',
-    mfgby:       v('mfgby')     || '',
-    mktaddr:     v('mktaddr')   || '',
-    ingredients: ings
+    name:v('name')||'Design', brand:v('brand')||'Brand',
+    qty:v('qty'), ptype:v('ptype'), volume:v('volume'),
+    effective:v('effective'), mrp:v('mrp'),
+    batch:v('batch'), mfgdate:v('mfgdate'),
+    expdate:v('expdate'), expmy:v('expmy'),
+    storage:v('storage'), usage:v('usage'),
+    marketed:v('marketed'), mfgby:v('mfgby'),
+    mktaddr:v('mktaddr'),
+    fontKey: fontKey,
+    ingredients: ings,
+    _logo: logoData[id] || null
   };
 }
 
 // ─────────────────────────────────────────────────────────────────
-// LIVE UPDATE PREVIEW
+// LIVE UPDATE
 // ─────────────────────────────────────────────────────────────────
 function liveUpdate(id) {
   var container = document.getElementById('preview_' + id);
   if (!container) return;
-  var d = collectData(id);
-  container.innerHTML = buildBoxInnerHTML(d);
+  container.innerHTML = buildBoxHTML(collectData(id));
 }
 
 // ─────────────────────────────────────────────────────────────────
-// BUILD BOX INNER HTML
+// PILL SVG
 // ─────────────────────────────────────────────────────────────────
 function pillSVG(w, h, brand) {
-  var hw = w * 0.5, hh = h * 0.5;
+  var uid = 'p' + w + h;
   return '<svg viewBox="0 0 ' + w + ' ' + h + '" width="' + w + '" height="' + h + '" xmlns="http://www.w3.org/2000/svg">'
     + '<defs>'
-    + '<radialGradient id="pg_' + w + '" cx="35%" cy="30%"><stop offset="0%" stop-color="#aee4ff"/><stop offset="100%" stop-color="#0055aa"/></radialGradient>'
-    + '<radialGradient id="cg_' + w + '" cx="40%" cy="35%"><stop offset="0%" stop-color="#ffe090"/><stop offset="100%" stop-color="#c97a10"/></radialGradient>'
+    + '<radialGradient id="pg' + uid + '" cx="35%" cy="30%"><stop offset="0%" stop-color="#aee4ff"/><stop offset="100%" stop-color="#0055aa"/></radialGradient>'
+    + '<radialGradient id="cg' + uid + '" cx="40%" cy="35%"><stop offset="0%" stop-color="#ffe090"/><stop offset="100%" stop-color="#c97a10"/></radialGradient>'
     + '</defs>'
-    + '<rect x="' + (w*.1) + '" y="' + (h*.28) + '" width="' + (w*.8) + '" height="' + (h*.34) + '" rx="' + (h*.17) + '" fill="url(#pg_' + w + ')"/>'
-    + '<line x1="' + hw + '" y1="' + (h*.28) + '" x2="' + hw + '" y2="' + (h*.62) + '" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>'
-    + '<rect x="' + hw + '" y="' + (h*.28) + '" width="' + (w*.4) + '" height="' + (h*.34) + '" rx="' + (h*.17) + '" fill="url(#cg_' + w + ')"/>'
-    + '<rect x="' + hw + '" y="' + (h*.28) + '" width="' + (w*.2) + '" height="' + (h*.34) + '" fill="url(#cg_' + w + ')"/>'
-    + '<text x="' + hw + '" y="' + (h*.82) + '" text-anchor="middle" font-size="' + Math.max(5,w*.07) + '" font-weight="700" fill="white" font-family="Montserrat,sans-serif">' + (brand||'').toUpperCase().substring(0,8) + '</text>'
+    + '<rect x="' + (w*.1) + '" y="' + (h*.28) + '" width="' + (w*.8) + '" height="' + (h*.34) + '" rx="' + (h*.17) + '" fill="url(#pg' + uid + ')"/>'
+    + '<line x1="' + (w*.5) + '" y1="' + (h*.28) + '" x2="' + (w*.5) + '" y2="' + (h*.62) + '" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>'
+    + '<rect x="' + (w*.5) + '" y="' + (h*.28) + '" width="' + (w*.4) + '" height="' + (h*.34) + '" rx="' + (h*.17) + '" fill="url(#cg' + uid + ')"/>'
+    + '<rect x="' + (w*.5) + '" y="' + (h*.28) + '" width="' + (w*.2) + '" height="' + (h*.34) + '" fill="url(#cg' + uid + ')"/>'
+    + '<text x="' + (w*.5) + '" y="' + (h*.82) + '" text-anchor="middle" font-size="' + Math.max(5,w*.07) + '" font-weight="700" fill="white" font-family="Montserrat,sans-serif">' + (brand||'').toUpperCase().substring(0,8) + '</text>'
     + '<ellipse cx="' + (w*.28) + '" cy="' + (h*.82) + '" rx="' + (w*.1) + '" ry="' + (h*.08) + '" fill="#4db8ff" opacity="0.7"/>'
-    + '<ellipse cx="' + (w*.72) + '" cy="' + (h*.8) + '" rx="' + (w*.1) + '" ry="' + (h*.07) + '" fill="#c9a84c" opacity="0.7"/>'
+    + '<ellipse cx="' + (w*.72) + '" cy="' + (h*.8)  + '" rx="' + (w*.1) + '" ry="' + (h*.07) + '" fill="#c9a84c" opacity="0.7"/>'
     + '</svg>';
 }
 
-function buildBoxInnerHTML(d) {
-  var BU  = d.brand.toUpperCase();
-  var PTU = d.ptype.toUpperCase();
+// ─────────────────────────────────────────────────────────────────
+// LOGO HTML for box panels
+// ─────────────────────────────────────────────────────────────────
+function logoBoxHTML(logo, brandName, size) {
+  size = size || 40;
+  if (logo) {
+    return '<img src="' + logo + '" style="max-width:' + size + 'px;max-height:' + (size*0.6) + 'px;object-fit:contain;border-radius:3px;" alt="logo">';
+  }
+  // fallback: text initials badge
+  var initials = (brandName||'AB').split(' ').map(function(w){ return w[0]; }).join('').substring(0,2).toUpperCase();
+  return '<div style="width:' + size + 'px;height:' + (size*0.6) + 'px;background:rgba(201,168,76,0.25);border:1px solid #c9a84c;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:' + Math.round(size*.22) + 'px;font-weight:700;color:#c9a84c;font-family:Cinzel,serif;">' + initials + '</div>';
+}
+
+// ─────────────────────────────────────────────────────────────────
+// BUILD BOX HTML
+// ─────────────────────────────────────────────────────────────────
+function buildBoxHTML(d) {
+  var BU       = d.brand.toUpperCase();
+  var PTU      = d.ptype.toUpperCase();
+  var fontCSS  = getFontCSS(d.fontKey);
+  var logo     = d._logo || null;
+
+  // brand style
+  var bs = 'font-family:' + fontCSS + ';font-weight:900;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,0.4);';
 
   var ingHTML = '';
   (d.ingredients||[]).forEach(function(ing){
@@ -551,7 +571,7 @@ function buildBoxInnerHTML(d) {
       + '</div>';
   });
 
-  var storHTML = (d.storage + '\nKeep out of reach of children.').split('\n')
+  var storHTML = (d.storage+'\nKeep out of reach of children.').split('\n')
     .map(function(l){ return l.trim(); }).filter(Boolean)
     .map(function(l){ return '<div style="font-size:5.5px;color:#88bbdd;text-align:center;font-style:italic;">' + esc(l) + '</div>'; })
     .join('');
@@ -559,44 +579,49 @@ function buildBoxInnerHTML(d) {
   var mktLines = d.marketed.replace(/\n/g,'<br>');
   var mfgLines = d.mfgby.replace(/\n/g,'<br>');
 
+  // ── LEFT ──
   var LEFT =
     '<div style="display:flex;flex-direction:column;">'
     + '<div class="flap" style="width:95px;border-radius:6px 6px 0 0;">'
-    +   '<div style="font-family:\'Cinzel\',serif;font-size:6px;color:#c9a84c;letter-spacing:2px;">' + BU + '</div>'
+    +   '<div style="font-family:' + fontCSS + ';font-size:6px;color:#c9a84c;letter-spacing:2px;">' + BU + '</div>'
     +   '<div style="font-size:5px;color:#a0d4ff;letter-spacing:1px;">' + PTU.substring(0,14) + '</div>'
     + '</div>'
     + '<div class="box-panel" style="width:95px;min-height:295px;padding:7px 5px;border-radius:0 0 0 5px;">'
     +   '<div class="gstrip">' + esc(d.effective) + '</div>'
-    +   '<div class="rxbadge" style="width:30px;height:30px;margin:6px auto 3px;"><span style="font-family:\'Cinzel\',serif;font-size:11px;color:#c9a84c;font-weight:700;">Rx</span></div>'
-    +   '<div class="bbrand" style="font-size:10px;text-align:center;">' + esc(d.brand) + '</div>'
-    +   '<div class="bsub" style="font-size:4.5px;text-align:center;">' + esc(d.ptype) + '</div>'
+    +   '<div class="rxbadge" style="width:30px;height:30px;margin:6px auto 3px;"><span style="font-family:' + fontCSS + ';font-size:11px;color:#c9a84c;font-weight:700;">Rx</span></div>'
+    +   '<div style="' + bs + 'font-size:11px;text-align:center;">' + esc(d.brand) + '</div>'
+    +   '<div style="font-family:Cinzel,serif;font-size:4.5px;text-align:center;letter-spacing:2px;color:#c9a84c;text-transform:uppercase;">' + esc(d.ptype) + '</div>'
     +   '<div class="bshim"></div>'
     +   '<div class="bpill" style="width:55px;height:55px;margin:3px auto;">' + pillSVG(55,55,d.brand) + '</div>'
-    +   '<div class="bcarea" style="margin-top:auto;">'
-    +     '<div style="font-size:4.5px;color:#88aabb;border:1px dashed rgba(77,184,255,0.3);padding:1px 4px;border-radius:2px;">COMPANY LOGO</div>'
-    +     '<div style="font-family:\'Cinzel\',serif;font-size:5px;color:#c9a84c;margin-top:1px;">' + esc(d.brand) + '</div>'
+    +   '<div class="bcarea" style="margin-top:auto;gap:4px;">'
+    +     logoBoxHTML(logo, d.brand, 38)
+    +     '<div style="font-family:' + fontCSS + ';font-size:5px;color:#c9a84c;margin-top:1px;">' + esc(d.brand) + '</div>'
     +   '</div>'
     +   '<div class="bdot" style="width:28px;height:28px;bottom:48px;left:-7px;"></div>'
     +   '<div class="box-wave"><svg viewBox="0 0 95 65" preserveAspectRatio="none" width="100%" height="100%"><path d="M0,26 Q24,8 48,26 Q71,44 95,26 L95,65 L0,65 Z" fill="#4db8ff"/></svg></div>'
     + '</div></div>';
 
+  // ── FRONT ──
   var FRONT =
     '<div style="display:flex;flex-direction:column;">'
     + '<div class="flap" style="width:175px;">'
-    +   '<div style="font-family:\'Cinzel\',serif;font-size:6.5px;color:#c9a84c;letter-spacing:2px;">' + BU + '</div>'
+    +   '<div style="font-family:' + fontCSS + ';font-size:6.5px;color:#c9a84c;letter-spacing:2px;">' + BU + '</div>'
     +   '<div style="background:linear-gradient(90deg,#003a7d,#0077e6,#003a7d);border:1px solid rgba(77,184,255,0.4);border-radius:3px;padding:2px 8px;font-size:5.5px;font-weight:700;color:#c9a84c;letter-spacing:1px;">' + esc(d.effective).toUpperCase() + '</div>'
     + '</div>'
     + '<div class="box-panel" style="width:175px;min-height:295px;padding:9px 8px 7px;">'
     +   '<div class="gstrip">' + esc(d.qty) + ' · ' + esc(d.effective) + '</div>'
-    +   '<div style="display:flex;align-items:center;gap:6px;width:100%;margin-top:7px;">'
-    +     '<div class="rxbadge" style="width:36px;height:36px;flex-shrink:0;"><span style="font-family:\'Cinzel\',serif;font-size:13px;color:#c9a84c;font-weight:700;">Rx</span></div>'
-    +     '<div><div class="bbrand" style="font-size:16px;">' + esc(d.brand) + '</div><div class="bsub" style="font-size:5px;">' + esc(d.ptype) + '</div></div>'
+    +   '<div style="display:flex;align-items:center;gap:7px;width:100%;margin-top:8px;">'
+    +     '<div class="rxbadge" style="width:36px;height:36px;flex-shrink:0;"><span style="font-family:' + fontCSS + ';font-size:13px;color:#c9a84c;font-weight:700;">Rx</span></div>'
+    +     '<div>'
+    +       '<div style="' + bs + 'font-size:17px;">' + esc(d.brand) + '</div>'
+    +       '<div style="font-family:Cinzel,serif;font-size:5px;letter-spacing:2px;color:#c9a84c;text-transform:uppercase;">' + esc(d.ptype) + '</div>'
+    +     '</div>'
     +   '</div>'
     +   '<div style="font-size:6px;font-weight:600;color:#a0d4ff;letter-spacing:2px;text-transform:uppercase;text-align:center;margin-top:2px;">' + esc(d.ptype) + '</div>'
     +   '<div class="bshim"></div>'
     +   '<div class="bpill" style="width:90px;height:78px;margin:3px auto;">' + pillSVG(90,78,d.brand) + '</div>'
     +   '<div class="bqbadge" style="width:42px;height:42px;margin:4px auto;">'
-    +     '<div class="bbrand" style="font-size:14px;line-height:1;">' + esc(d.qty) + '</div>'
+    +     '<div style="' + bs + 'font-size:14px;line-height:1;">' + esc(d.qty) + '</div>'
     +     '<div style="font-size:5px;color:#c9a84c;letter-spacing:1px;font-weight:700;">' + esc(d.volume) + '</div>'
     +   '</div>'
     +   '<div class="gstrip" style="margin-top:auto;">' + esc(d.effective) + '</div>'
@@ -604,16 +629,17 @@ function buildBoxInnerHTML(d) {
     +   '<div class="box-wave"><svg viewBox="0 0 175 65" preserveAspectRatio="none" width="100%" height="100%"><path d="M0,26 Q44,8 88,26 Q131,44 175,26 L175,65 L0,65 Z" fill="#4db8ff"/><path d="M0,42 Q44,26 88,42 Q131,58 175,42 L175,65 L0,65 Z" fill="#0066cc"/></svg></div>'
     + '</div></div>';
 
+  // ── BACK ──
   var BACK =
     '<div style="display:flex;flex-direction:column;">'
     + '<div class="flap" style="width:175px;">'
-    +   '<div style="font-family:\'Cinzel\',serif;font-size:6px;color:#c9a84c;letter-spacing:2px;">INGREDIENTS &amp; INFO</div>'
+    +   '<div style="font-family:' + fontCSS + ';font-size:6px;color:#c9a84c;letter-spacing:2px;">INGREDIENTS &amp; INFO</div>'
     + '</div>'
     + '<div class="box-panel" style="width:175px;min-height:295px;padding:9px 8px 7px;">'
     +   '<div class="gstrip">' + esc(d.qty) + ' · ' + esc(d.effective) + '</div>'
     +   '<div style="display:flex;align-items:center;gap:6px;width:100%;margin-top:6px;">'
-    +     '<div class="rxbadge" style="width:28px;height:28px;flex-shrink:0;"><span style="font-family:\'Cinzel\',serif;font-size:10px;color:#c9a84c;font-weight:700;">Rx</span></div>'
-    +     '<div><div class="bbrand" style="font-size:12px;">' + esc(d.brand) + '</div><div class="bsub" style="font-size:4.5px;">' + esc(d.ptype) + '</div></div>'
+    +     '<div class="rxbadge" style="width:28px;height:28px;flex-shrink:0;"><span style="font-family:' + fontCSS + ';font-size:10px;color:#c9a84c;font-weight:700;">Rx</span></div>'
+    +     '<div><div style="' + bs + 'font-size:12px;">' + esc(d.brand) + '</div><div style="font-family:Cinzel,serif;font-size:4.5px;color:#c9a84c;letter-spacing:2px;text-transform:uppercase;">' + esc(d.ptype) + '</div></div>'
     +   '</div>'
     +   '<div class="bshim"></div>'
     +   '<div style="width:100%;margin-top:3px;">'
@@ -622,34 +648,35 @@ function buildBoxInnerHTML(d) {
     +   '</div>'
     +   '<div style="margin-top:4px;">' + storHTML + '</div>'
     +   '<div class="bqbadge" style="width:38px;height:38px;margin:4px auto;">'
-    +     '<div class="bbrand" style="font-size:13px;line-height:1;">' + esc(d.qty) + '</div>'
+    +     '<div style="' + bs + 'font-size:13px;line-height:1;">' + esc(d.qty) + '</div>'
     +     '<div style="font-size:4.5px;color:#c9a84c;letter-spacing:1px;font-weight:700;">' + esc(d.volume) + '</div>'
     +   '</div>'
-    +   '<div class="bcarea" style="margin-top:auto;">'
-    +     '<div style="font-size:4.5px;color:#88aabb;border:1px dashed rgba(77,184,255,0.3);padding:1px 5px;border-radius:2px;">COMPANY LOGO</div>'
-    +     '<div style="font-family:\'Cinzel\',serif;font-size:5.5px;color:#c9a84c;margin-top:1px;">' + esc(d.brand) + '</div>'
+    +   '<div class="bcarea" style="margin-top:auto;gap:4px;">'
+    +     logoBoxHTML(logo, d.brand, 36)
+    +     '<div style="font-family:' + fontCSS + ';font-size:5.5px;color:#c9a84c;margin-top:1px;">' + esc(d.brand) + '</div>'
     +     '<div style="font-size:4.5px;color:#88bbdd;text-align:center;line-height:1.4;margin-top:1px;">' + esc(d.mktaddr) + '</div>'
     +   '</div>'
     +   '<div class="box-wave"><svg viewBox="0 0 175 65" preserveAspectRatio="none" width="100%" height="100%"><path d="M0,26 Q44,8 88,26 Q131,44 175,26 L175,65 L0,65 Z" fill="#4db8ff"/><path d="M0,42 Q44,26 88,42 Q131,58 175,42 L175,65 L0,65 Z" fill="#0066cc"/></svg></div>'
     + '</div></div>';
 
+  // ── RIGHT ──
   var RIGHT =
     '<div style="display:flex;flex-direction:column;">'
     + '<div class="flap" style="width:95px;border-radius:6px 6px 0 0;">'
-    +   '<div style="font-family:\'Cinzel\',serif;font-size:6px;color:#c9a84c;letter-spacing:2px;">' + BU + '</div>'
+    +   '<div style="font-family:' + fontCSS + ';font-size:6px;color:#c9a84c;letter-spacing:2px;">' + BU + '</div>'
     +   '<div style="font-size:5px;color:#a0d4ff;letter-spacing:1px;">' + PTU.substring(0,14) + '</div>'
     + '</div>'
     + '<div class="box-panel" style="width:95px;min-height:295px;padding:7px 5px;border-radius:0 0 5px 0;">'
     +   '<div class="gstrip">' + esc(d.effective) + '</div>'
-    +   '<div class="bbrand" style="font-size:10px;text-align:center;margin-top:6px;">' + esc(d.brand) + '</div>'
-    +   '<div class="bsub" style="font-size:4.5px;text-align:center;">' + esc(d.ptype) + '</div>'
+    +   '<div style="' + bs + 'font-size:11px;text-align:center;margin-top:6px;">' + esc(d.brand) + '</div>'
+    +   '<div style="font-family:Cinzel,serif;font-size:4.5px;text-align:center;letter-spacing:2px;color:#c9a84c;text-transform:uppercase;">' + esc(d.ptype) + '</div>'
     +   '<div class="bshim"></div>'
     +   '<div style="font-size:5px;color:#d0eaff;line-height:1.9;width:100%;margin-top:2px;">'
     +     '<span style="color:#c9a84c;font-weight:700;">Mfg. Lic.:</span> ' + esc(d.batch) + '<br>'
-    +     '<span style="color:#c9a84c;font-weight:700;">Batch:</span> ' + esc(d.expdate) + '<br>'
+    +     '<span style="color:#c9a84c;font-weight:700;">Batch:</span> '     + esc(d.expdate) + '<br>'
     +     '<span style="color:#c9a84c;font-weight:700;">Mfg. Date:</span> ' + esc(d.mfgdate) + '<br>'
     +     '<span style="color:#c9a84c;font-weight:700;">Exp. Date:</span> ' + esc(d.expmy) + '<br>'
-    +     '<span style="color:#c9a84c;font-weight:700;">MRP:</span> ' + esc(d.mrp) + '<br>'
+    +     '<span style="color:#c9a84c;font-weight:700;">MRP:</span> '       + esc(d.mrp) + '<br>'
     +     '<span style="font-size:4.5px;color:#88bbdd;">Incl. all taxes</span>'
     +   '</div>'
     +   '<div class="bshim"></div>'
@@ -665,13 +692,32 @@ function buildBoxInnerHTML(d) {
 }
 
 // ─────────────────────────────────────────────────────────────────
-// DOWNLOAD DESIGN AS STANDALONE HTML
+// DOWNLOAD
 // ─────────────────────────────────────────────────────────────────
 function downloadDesign(id) {
   var d = collectData(id);
+  var fontCSS = getFontCSS(d.fontKey);
+
+  // find font URL
+  var fontUrlMap = {
+    playfair:"family=Playfair+Display:wght@700;900",
+    cinzel:"family=Cinzel:wght@700",
+    montserrat:"family=Montserrat:wght@400;600;700",
+    raleway:"family=Raleway:wght@400;600;700",
+    oswald:"family=Oswald:wght@400;600;700",
+    lora:"family=Lora:wght@400;600;700",
+    bebas:"family=Bebas+Neue",
+    nunito:"family=Nunito:wght@400;600;700",
+    poppins:"family=Poppins:wght@400;600;700",
+    dancing:"family=Dancing+Script:wght@700",
+    abril:"family=Abril+Fatface",
+    dmsans:"family=DM+Sans:wght@400;500;600"
+  };
+  var fontLink = 'https://fonts.googleapis.com/css2?' + (fontUrlMap[d.fontKey]||fontUrlMap.playfair) + '&display=swap';
+
   var css = '*{margin:0;padding:0;box-sizing:border-box;}'
-    + "body{background:linear-gradient(135deg,#0d1b35 0%,#1a2a4a 100%);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 10px;font-family:'Montserrat',sans-serif;}"
-    + ".title{font-family:'Cinzel',serif;font-size:20px;color:#c9a84c;letter-spacing:3px;margin-bottom:22px;}"
+    + "body{background:linear-gradient(135deg,#0d1b35 0%,#1a2a4a 100%);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 10px;font-family:'DM Sans',sans-serif;}"
+    + ".title{font-family:" + fontCSS + ";font-size:20px;color:#c9a84c;letter-spacing:3px;margin-bottom:22px;}"
     + '.box-wrap{display:flex;align-items:flex-start;filter:drop-shadow(0 18px 45px rgba(0,0,0,0.7));}'
     + '.flap{height:52px;background:linear-gradient(180deg,#002460,#003a8c);border:1px solid rgba(77,184,255,0.25);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px;}'
     + '.box-panel{background:linear-gradient(170deg,#002d6b 0%,#0055b3 45%,#0066cc 75%,#002d6b 100%);border:1px solid rgba(77,184,255,0.2);position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;}'
@@ -679,63 +725,60 @@ function downloadDesign(id) {
     + '.rxbadge{border:2px solid #c9a84c;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.07);}'
     + '.box-wave{position:absolute;bottom:0;left:0;right:0;height:65px;opacity:0.2;pointer-events:none;}'
     + '.bdot{position:absolute;border-radius:50%;background:rgba(77,184,255,0.1);pointer-events:none;}'
-    + ".bbrand{font-family:'Playfair Display',serif;font-weight:900;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,0.4);}"
-    + ".bsub{font-family:'Cinzel',serif;letter-spacing:3px;color:#c9a84c;text-transform:uppercase;}"
     + '.bshim{width:75%;height:1px;background:linear-gradient(90deg,transparent,#c9a84c,transparent);margin:4px auto;}'
     + '.bqbadge{border:1.5px solid #c9a84c;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(255,255,255,0.07);}'
     + '.bcarea{width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(77,184,255,0.25);border-radius:3px;padding:5px;display:flex;flex-direction:column;align-items:center;}'
     + '.bpill{border:1px dashed rgba(77,184,255,0.3);border-radius:5px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(0,20,60,0.35);}';
 
   var html = '<!DOCTYPE html><html lang="en"><head>'
-    + '<meta charset="UTF-8"><title>' + d.name + ' — ' + d.ptype + '</title>'
-    + '<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@400;600;700&family=Cinzel:wght@700&display=swap" rel="stylesheet">'
+    + '<meta charset="UTF-8"><title>' + d.name + '</title>'
+    + '<link href="' + fontLink + '" rel="stylesheet">'
     + '<style>' + css + '</style>'
     + '</head><body>'
-    + '<div class="title">' + d.name + ' · MRP ' + d.mrp + '</div>'
-    + '<div class="box-wrap">' + buildBoxInnerHTML(d) + '</div>'
+    + '<div class="title">' + d.name + ' &nbsp;·&nbsp; MRP ' + d.mrp + '</div>'
+    + '<div class="box-wrap">' + buildBoxHTML(d) + '</div>'
     + '</body></html>';
 
-  var blob = new Blob([html], { type: 'text/html' });
+  var blob = new Blob([html], {type:'text/html'});
   var url  = URL.createObjectURL(blob);
   var a    = document.createElement('a');
-  a.href = url;
-  a.download = d.name.replace(/\s+/g, '-').toLowerCase() + '.html';
+  a.href = url; a.download = d.name.replace(/\s+/g,'-').toLowerCase() + '.html';
   document.body.appendChild(a); a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
 
 // ─────────────────────────────────────────────────────────────────
-// ESCAPE HTML
+// ESC
 // ─────────────────────────────────────────────────────────────────
-function esc(str) {
-  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 // ─────────────────────────────────────────────────────────────────
-// BOOT — create 2 initial designs
+// BOOT — 2 starter designs
 // ─────────────────────────────────────────────────────────────────
-addNewDesign(defaultData('Design 1'));
+addNewDesign();
 
-var d2 = defaultData('Design 2');
-d2.brand     = 'Abraham';
-d2.qty       = '50Q';
-d2.ptype     = 'Premium Cream';
-d2.volume    = '50 ml';
+var d2     = defaultData();
+d2.name    = 'Design 2';
+d2.brand   = 'Abraham';
+d2.qty     = '50Q';
+d2.ptype   = 'Premium Cream';
+d2.volume  = '50 ml';
 d2.effective = 'Premium Formula';
-d2.mrp       = '980 CAD';
-d2.batch     = 'MFG-CAN-AB-5010';
+d2.mrp     = '980 CAD';
+d2.fontKey = 'raleway';
+d2.batch   = 'MFG-CAN-AB-5010';
 d2.ingredients = [
-  { name: 'Hydrocortisone', amount: '5%'  },
-  { name: 'Aloe Vera',      amount: '30%' },
-  { name: 'Vitamin E',      amount: '10%' },
-  { name: 'Aqua Base',      amount: 'q.s.' }
+  {name:'Hydrocortisone',amount:'5%'},
+  {name:'Aloe Vera',     amount:'30%'},
+  {name:'Vitamin E',     amount:'10%'},
+  {name:'Aqua Base',     amount:'q.s.'}
 ];
 addNewDesign(d2);
 
-// Initial previews
 designs.forEach(function(d){ liveUpdate(d.id); });
-
 </script>
 </body>
 </html>
