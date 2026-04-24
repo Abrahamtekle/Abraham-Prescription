@@ -7,7 +7,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@300;400;600;700&family=Cinzel:wght@700&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
 body {
   background: linear-gradient(135deg, #0d1b35 0%, #1a2a4a 100%);
   min-height: 100vh;
@@ -17,12 +16,12 @@ body {
   justify-content: center;
   font-family: 'Montserrat', sans-serif;
   padding: 40px 20px;
-  gap: 32px;
+  gap: 28px;
 }
 
-/* ── OPEN TABS BUTTON ── */
-.open-tabs-btn {
-  padding: 14px 40px;
+/* BUTTON */
+#generateBtn {
+  padding: 15px 42px;
   background: linear-gradient(90deg, #a07830, #e0c060, #c9a84c, #e0c060, #a07830);
   border: none;
   border-radius: 8px;
@@ -33,21 +32,21 @@ body {
   color: #1a0a00;
   cursor: pointer;
   box-shadow: 0 6px 24px rgba(201, 168, 76, 0.4);
-  transition: transform .15s, box-shadow .15s;
+  transition: transform .15s, box-shadow .15s, background .4s, color .4s;
 }
-.open-tabs-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(201, 168, 76, 0.55); }
-.open-tabs-btn:active { transform: scale(.97); }
+#generateBtn:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(201,168,76,0.55); }
+#generateBtn:active:not(:disabled) { transform: scale(.97); }
+#generateBtn:disabled { opacity: .75; cursor: default; }
 
 .hint {
   font-size: 11px;
   color: #4db8ff;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+  letter-spacing: 1.5px;
   text-align: center;
-  margin-top: -16px;
+  line-height: 1.8;
 }
 
-/* ── BOX PREVIEW ── */
+/* BOX PREVIEW STYLES */
 .box-wrap { display: flex; align-items: flex-start; gap: 0; filter: drop-shadow(0 24px 60px rgba(0,0,0,0.8)); }
 .flap { height: 54px; background: linear-gradient(180deg,#002460,#003a8c); border: 1px solid rgba(77,184,255,0.25); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 2px; }
 .panel { background: linear-gradient(170deg,#002d6b 0%,#0055b3 45%,#0066cc 75%,#002d6b 100%); border: 1px solid rgba(77,184,255,0.2); position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; }
@@ -68,12 +67,16 @@ body {
 <body>
 
 <!-- MAIN BUTTON -->
-<button class="open-tabs-btn" onclick="openAllTabs()">
-  &#128194; OPEN ALL BOX DESIGNS
+<button id="generateBtn" onclick="generateAllBoxes()">
+  &#128194; GENERATE ALL BOX DESIGNS
 </button>
-<p class="hint">Opens each user's box in a separate new tab</p>
 
-<!-- STATIC PREVIEW OF BOX (first user) -->
+<p class="hint">
+  Click to download <strong style="color:#c9a84c;">user1-box.html</strong> and <strong style="color:#c9a84c;">user2-box.html</strong><br>
+  Then open each file in your browser — the design stays permanently
+</p>
+
+<!-- STATIC PREVIEW (User 1) -->
 <div class="box-wrap">
 
   <!-- LEFT SIDE -->
@@ -160,9 +163,8 @@ body {
         <div class="brand" style="font-size:18px;line-height:1;">100</div>
         <div style="font-size:5.5px;color:#c9a84c;letter-spacing:1px;font-weight:700;">GRAMS</div>
       </div>
-      <div class="gstrip" style="margin-top:auto;">Effective Result</div>
+      <div class="gstrip" style="margin-top:auto;">100 · Effective Result</div>
       <div class="dot" style="width:50px;height:50px;top:-10px;right:-8px;"></div>
-      <div class="dot" style="width:22px;height:22px;top:110px;left:3px;"></div>
       <div class="wave"><svg viewBox="0 0 190 70" preserveAspectRatio="none" width="100%" height="100%"><path d="M0,30 Q47,8 95,30 Q142,52 190,30 L190,70 L0,70 Z" fill="#4db8ff"/><path d="M0,48 Q47,28 95,48 Q142,68 190,48 L190,70 L0,70 Z" fill="#0066cc"/></svg></div>
     </div>
   </div>
