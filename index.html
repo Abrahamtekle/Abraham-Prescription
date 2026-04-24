@@ -7,789 +7,672 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Cinzel:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #f4f6f9;
+  --bg: #f0f3f8;
   --white: #ffffff;
   --border: #dde2ea;
   --blue: #0055b3;
   --blue-light: #e8f0fb;
   --gold: #c9a84c;
   --text: #1a2233;
-  --text-muted: #6b7a99;
-  --green: #1e7e3e;
-  --radius: 8px;
-  --shadow: 0 2px 12px rgba(0,0,0,0.08);
+  --muted: #6b7a99;
+  --green: #1a7a3c;
+  --red: #c0392b;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-}
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-/* ── TOP BAR ── */
+/* TOP BAR */
 .topbar {
   background: var(--blue);
-  padding: 14px 32px;
+  padding: 0 28px;
+  height: 52px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: space-between;
 }
-.topbar h1 {
-  font-family: 'Cinzel', serif;
-  font-size: 16px;
-  color: #fff;
-  letter-spacing: 2px;
+.topbar-left { display: flex; align-items: center; gap: 14px; }
+.topbar h1 { font-family: 'Cinzel', serif; font-size: 15px; color: #fff; letter-spacing: 2px; }
+.topbar-tag { font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 1px; background: rgba(255,255,255,0.1); padding: 3px 10px; border-radius: 20px; }
+.add-design-btn {
+  padding: 8px 18px;
+  background: linear-gradient(90deg, #a07830, #e0c060, #c9a84c);
+  border: none; border-radius: 6px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px; font-weight: 700;
+  color: #1a0a00; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
 }
-.topbar span {
-  font-size: 11px;
-  color: rgba(255,255,255,0.6);
-  letter-spacing: 1px;
-}
+.add-design-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(201,168,76,0.4); }
 
-/* ── MAIN LAYOUT ── */
-.main {
-  display: grid;
-  grid-template-columns: 480px 1fr;
-  gap: 0;
-  min-height: calc(100vh - 52px);
+/* TABS */
+.tabs-bar {
+  background: var(--white);
+  border-bottom: 2px solid var(--border);
+  padding: 0 28px;
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  overflow-x: auto;
 }
+.tab {
+  padding: 10px 18px 10px;
+  font-size: 13px; font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  white-space: nowrap;
+  display: flex; align-items: center; gap: 8px;
+  transition: color .2s, border-color .2s;
+  user-select: none;
+}
+.tab:hover { color: var(--blue); }
+.tab.active { color: var(--blue); border-bottom-color: var(--blue); font-weight: 600; }
+.tab-close {
+  font-size: 14px; color: var(--muted);
+  line-height: 1; padding: 0 2px;
+  border-radius: 50%;
+  transition: background .15s, color .15s;
+}
+.tab-close:hover { background: #fde8e8; color: var(--red); }
 
-/* ── FORM PANEL ── */
-.form-panel {
+/* DESIGN PANELS */
+.design-panels { display: none; }
+.design-panels.active { display: flex; height: calc(100vh - 52px - 46px); }
+
+/* FORM SIDE */
+.form-side {
+  width: 460px;
+  min-width: 460px;
   background: var(--white);
   border-right: 1px solid var(--border);
-  padding: 28px 28px 100px;
-  overflow-y: auto;
-  max-height: calc(100vh - 52px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
-.form-panel h2 {
-  font-size: 18px;
-  font-weight: 600;
+.form-header {
+  padding: 18px 24px 14px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.form-header h2 { font-size: 15px; font-weight: 600; }
+.form-header .design-name-input {
+  font-size: 15px; font-weight: 600;
+  border: none; outline: none;
   color: var(--text);
-  margin-bottom: 22px;
-  padding-bottom: 14px;
-  border-bottom: 2px solid var(--blue-light);
+  font-family: 'DM Sans', sans-serif;
+  background: transparent;
+  width: 100%;
 }
+.form-header .design-name-input:focus { border-bottom: 2px solid var(--blue); }
+.form-scroll { flex: 1; overflow-y: auto; padding: 18px 24px 80px; }
 
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-.form-grid.full { grid-template-columns: 1fr; }
-.form-grid.three { grid-template-columns: 1fr 1fr 1fr; }
-
-.field { display: flex; flex-direction: column; gap: 5px; }
-.field label {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--text-muted);
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-}
-.field input,
-.field textarea,
-.field select {
-  padding: 9px 12px;
+/* FIELDS */
+.fg { display: grid; gap: 10px; margin-bottom: 10px; }
+.fg-2 { grid-template-columns: 1fr 1fr; }
+.fg-1 { grid-template-columns: 1fr; }
+.fg-3 { grid-template-columns: 1fr 1fr 1fr; }
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field label { font-size: 10px; font-weight: 600; color: var(--muted); letter-spacing: 0.8px; text-transform: uppercase; }
+.field input, .field textarea {
+  padding: 8px 10px;
   border: 1.5px solid var(--border);
   border-radius: 6px;
   font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
+  font-size: 12.5px;
   color: var(--text);
   background: #fff;
-  transition: border-color .2s, box-shadow .2s;
+  transition: border-color .2s;
   resize: vertical;
 }
-.field input:focus,
-.field textarea:focus,
-.field select:focus {
-  outline: none;
-  border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(0,85,179,0.1);
+.field input:focus, .field textarea:focus {
+  outline: none; border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(0,85,179,0.08);
 }
-.field textarea { min-height: 72px; }
-
-.section-title {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--blue);
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  margin: 20px 0 10px;
-  padding-bottom: 6px;
+.field textarea { min-height: 60px; }
+.sec-title {
+  font-size: 11px; font-weight: 700; color: var(--blue);
+  letter-spacing: 1.5px; text-transform: uppercase;
+  margin: 16px 0 8px;
+  padding-bottom: 5px;
   border-bottom: 1px solid var(--blue-light);
 }
-
-/* ingredient rows */
-.ing-group { display: flex; flex-direction: column; gap: 8px; }
-.ing-row-input { display: flex; gap: 8px; align-items: center; }
-.ing-row-input input:first-child { flex: 2; }
-.ing-row-input input:last-child  { flex: 1; }
-
-/* action buttons */
-.btn-row {
-  display: flex;
-  gap: 12px;
-  margin-top: 24px;
-  position: sticky;
-  bottom: 0;
-  background: var(--white);
-  padding: 16px 0 4px;
-  border-top: 1px solid var(--border);
+.ing-group { display: flex; flex-direction: column; gap: 6px; }
+.ing-row { display: flex; gap: 6px; align-items: center; }
+.ing-row input:first-child { flex: 2; }
+.ing-row input:last-child  { flex: 1; }
+.ing-del {
+  width: 22px; height: 22px; border: none; border-radius: 50%;
+  background: #fde8e8; color: var(--red);
+  font-size: 14px; cursor: pointer; line-height: 1;
+  flex-shrink: 0; transition: background .15s;
 }
-.btn {
-  flex: 1;
-  padding: 11px 16px;
-  border: none;
-  border-radius: 7px;
+.ing-del:hover { background: #f5b7b1; }
+.add-ing-btn {
+  margin-top: 6px;
+  padding: 6px 12px;
+  background: var(--blue-light);
+  border: 1px solid #c0d3f0;
+  border-radius: 5px;
   font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 11px; font-weight: 600;
+  color: var(--blue); cursor: pointer;
+  align-self: flex-start;
+  transition: background .15s;
+}
+.add-ing-btn:hover { background: #d0e4f8; }
+
+/* FORM FOOTER BUTTONS */
+.form-footer {
+  position: sticky; bottom: 0;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  padding: 12px 24px;
+  display: flex; gap: 10px;
+}
+.fbtn {
+  flex: 1; padding: 10px;
+  border: none; border-radius: 7px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12.5px; font-weight: 600;
   cursor: pointer;
-  transition: transform .15s, box-shadow .15s, opacity .15s;
+  transition: transform .15s, box-shadow .15s;
 }
-.btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.15); }
-.btn:active { transform: scale(.98); }
-.btn-primary {
-  background: var(--blue);
-  color: #fff;
-}
-.btn-secondary {
+.fbtn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
+.fbtn:active { transform: scale(.98); }
+.fbtn-blue { background: var(--blue); color: #fff; }
+.fbtn-gold {
   background: linear-gradient(90deg, #a07830, #e0c060, #c9a84c);
   color: #1a0a00;
 }
 
-/* ── PREVIEW PANEL ── */
-.preview-panel {
+/* PREVIEW SIDE */
+.preview-side {
+  flex: 1;
   background: linear-gradient(135deg, #0d1b35 0%, #1a2a4a 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px 20px;
-  overflow-y: auto;
-  gap: 36px;
-}
-.preview-label {
-  font-size: 11px;
-  color: rgba(255,255,255,0.4);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  align-self: flex-start;
-  margin-left: 10px;
-}
-
-/* ── BOX DESIGN ── */
-.box-wrap {
-  display: flex;
-  align-items: flex-start;
-  filter: drop-shadow(0 20px 50px rgba(0,0,0,0.7));
-}
-.flap {
-  height: 52px;
-  background: linear-gradient(180deg, #002460, #003a8c);
-  border: 1px solid rgba(77,184,255,0.25);
-  display: flex;
-  align-items: center;
   justify-content: center;
-  flex-direction: column;
-  gap: 2px;
-}
-.box-panel {
-  background: linear-gradient(170deg, #002d6b 0%, #0055b3 45%, #0066cc 75%, #002d6b 100%);
-  border: 1px solid rgba(77,184,255,0.2);
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.gstrip {
-  background: linear-gradient(90deg, #a07830, #e0c060, #c9a84c, #e0c060, #a07830);
-  width: 100%;
-  padding: 3px 6px;
-  text-align: center;
-  font-size: 6.5px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  color: #1a0a00;
-  text-transform: uppercase;
-}
-.rxbadge {
-  border: 2px solid #c9a84c;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255,255,255,0.07);
-}
-.box-wave {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 65px;
-  opacity: 0.2;
-  pointer-events: none;
-}
-.bdot {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(77,184,255,0.1);
-  pointer-events: none;
-}
-.bbrand {
-  font-family: 'Playfair Display', serif;
-  font-weight: 900;
-  color: #fff;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.4);
-}
-.bsub {
-  font-family: 'Cinzel', serif;
-  letter-spacing: 3px;
-  color: #c9a84c;
-  text-transform: uppercase;
-}
-.bptype {
-  font-size: 7px;
-  font-weight: 600;
-  color: #a0d4ff;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  text-align: center;
-}
-.bshim {
-  width: 75%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #c9a84c, transparent);
-  margin: 4px auto;
-}
-.bqbadge {
-  border: 1.5px solid #c9a84c;
-  border-radius: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255,255,255,0.07);
-}
-.bing-row {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 2px;
-}
-.bcarea {
-  width: 100%;
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(77,184,255,0.25);
-  border-radius: 3px;
-  padding: 5px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.bpill {
-  border: 1px dashed rgba(77,184,255,0.3);
-  border-radius: 5px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0,20,60,0.35);
-}
-
-/* ── MULTIPLE DESIGNS AREA ── */
-.multi-area {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+  padding: 32px 20px;
+  overflow: auto;
   gap: 20px;
 }
-.multi-label {
-  font-size: 11px;
-  color: rgba(255,255,255,0.4);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-.multi-row {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-}
-.mini-card {
-  background: linear-gradient(170deg, #002d6b, #0055b3, #002d6b);
-  border: 1px solid rgba(77,184,255,0.3);
-  border-radius: 8px;
-  padding: 12px 14px;
-  min-width: 160px;
-  cursor: pointer;
-  transition: transform .2s, border-color .2s;
-  position: relative;
-}
-.mini-card:hover { transform: translateY(-3px); border-color: #c9a84c; }
-.mini-card .mc-brand {
-  font-family: 'Playfair Display', serif;
-  font-size: 14px;
-  font-weight: 900;
-  color: #fff;
-}
-.mini-card .mc-sub {
-  font-family: 'Cinzel', serif;
-  font-size: 6px;
-  color: #c9a84c;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-top: 1px;
-}
-.mini-card .mc-mrp {
-  margin-top: 6px;
-  font-size: 11px;
-  color: #a0d4ff;
-  font-weight: 600;
-}
-.mini-card .mc-ptype {
-  font-size: 9px;
-  color: rgba(255,255,255,0.5);
-  margin-top: 2px;
-}
-.mc-dl-btn {
-  position: absolute;
-  top: 8px; right: 8px;
-  background: rgba(201,168,76,0.2);
-  border: 1px solid #c9a84c;
-  border-radius: 4px;
-  color: #c9a84c;
-  font-size: 10px;
-  padding: 3px 7px;
-  cursor: pointer;
-  font-weight: 700;
-}
-.mc-dl-btn:hover { background: rgba(201,168,76,0.4); }
+.preview-tag { font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: 2px; text-transform: uppercase; }
 
-/* success flash */
-@keyframes flash {
-  0%   { background: #1e7e3e; }
-  100% { background: var(--blue); }
-}
-.flash { animation: flash .4s ease; }
+/* BOX COMPONENT STYLES */
+.box-wrap { display: flex; align-items: flex-start; filter: drop-shadow(0 18px 45px rgba(0,0,0,0.7)); }
+.flap { height: 52px; background: linear-gradient(180deg,#002460,#003a8c); border: 1px solid rgba(77,184,255,0.25); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 2px; }
+.box-panel { background: linear-gradient(170deg,#002d6b 0%,#0055b3 45%,#0066cc 75%,#002d6b 100%); border: 1px solid rgba(77,184,255,0.2); position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; }
+.gstrip { background: linear-gradient(90deg,#a07830,#e0c060,#c9a84c,#e0c060,#a07830); width: 100%; padding: 3px 6px; text-align: center; font-size: 6.5px; font-weight: 700; letter-spacing: 1.5px; color: #1a0a00; text-transform: uppercase; }
+.rxbadge { border: 2px solid #c9a84c; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.07); }
+.box-wave { position: absolute; bottom: 0; left: 0; right: 0; height: 65px; opacity: 0.2; pointer-events: none; }
+.bdot { position: absolute; border-radius: 50%; background: rgba(77,184,255,0.1); pointer-events: none; }
+.bbrand { font-family: 'Playfair Display', serif; font-weight: 900; color: #fff; text-shadow: 0 2px 6px rgba(0,0,0,0.4); }
+.bsub { font-family: 'Cinzel', serif; letter-spacing: 3px; color: #c9a84c; text-transform: uppercase; }
+.bshim { width: 75%; height: 1px; background: linear-gradient(90deg,transparent,#c9a84c,transparent); margin: 4px auto; }
+.bqbadge { border: 1.5px solid #c9a84c; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(255,255,255,0.07); }
+.bcarea { width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(77,184,255,0.25); border-radius: 3px; padding: 5px; display: flex; flex-direction: column; align-items: center; }
+.bpill { border: 1px dashed rgba(77,184,255,0.3); border-radius: 5px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: rgba(0,20,60,0.35); }
 </style>
 </head>
 <body>
 
 <!-- TOP BAR -->
 <div class="topbar">
-  <h1>PACKAGING DESIGN EDITOR</h1>
-  <span>Abraham Prescription</span>
+  <div class="topbar-left">
+    <h1>PACKAGING EDITOR</h1>
+    <span class="topbar-tag">Abraham Prescription</span>
+  </div>
+  <button class="add-design-btn" onclick="addNewDesign()">+ Add New Design</button>
 </div>
 
-<div class="main">
+<!-- TABS -->
+<div class="tabs-bar" id="tabsBar"></div>
 
-  <!-- ══ FORM PANEL ══ -->
-  <div class="form-panel">
-    <h2>Edit Packaging Details</h2>
-
-    <!-- Basic Info -->
-    <div class="form-grid">
-      <div class="field">
-        <label>Brand Name</label>
-        <input id="f_brand" value="Abraham" oninput="liveUpdate()">
-      </div>
-      <div class="field">
-        <label>Quantity / Size</label>
-        <input id="f_qty" value="20Q" oninput="liveUpdate()">
-      </div>
-    </div>
-    <div class="form-grid">
-      <div class="field">
-        <label>Product Type</label>
-        <input id="f_ptype" value="Medicated Ointment" oninput="liveUpdate()">
-      </div>
-      <div class="field">
-        <label>Volume / Weight</label>
-        <input id="f_volume" value="20 ml" oninput="liveUpdate()">
-      </div>
-    </div>
-    <div class="form-grid">
-      <div class="field">
-        <label>Effective Result</label>
-        <input id="f_effective" value="Effective Result" oninput="liveUpdate()">
-      </div>
-      <div class="field">
-        <label>Price (MRP)</label>
-        <input id="f_mrp" value="520 CAD" oninput="liveUpdate()">
-      </div>
-    </div>
-    <div class="form-grid">
-      <div class="field">
-        <label>Mfg. Batch No.</label>
-        <input id="f_batch" value="MFG-CAN-AB-2459" oninput="liveUpdate()">
-      </div>
-      <div class="field">
-        <label>Mfg. Date</label>
-        <input id="f_mfgdate" value="April 2026" oninput="liveUpdate()">
-      </div>
-    </div>
-    <div class="form-grid">
-      <div class="field">
-        <label>Expiry Date</label>
-        <input id="f_expdate" value="C000G25b" oninput="liveUpdate()">
-      </div>
-      <div class="field">
-        <label>Exp. Month/Year</label>
-        <input id="f_expmy" value="May 2026" oninput="liveUpdate()">
-      </div>
-    </div>
-
-    <!-- Storage -->
-    <div class="section-title">Storage &amp; Usage</div>
-    <div class="form-grid full">
-      <div class="field">
-        <label>Storage Instructions</label>
-        <textarea id="f_storage" oninput="liveUpdate()">Store in a cool and dry place.</textarea>
-      </div>
-    </div>
-    <div class="form-grid full">
-      <div class="field">
-        <label>Usage Instructions</label>
-        <textarea id="f_usage" oninput="liveUpdate()">Apply a thin layer to the affected area twice daily or as directed by a healthcare professional.</textarea>
-      </div>
-    </div>
-
-    <!-- Ingredients -->
-    <div class="section-title">Ingredients</div>
-    <div class="ing-group" id="ingGroup">
-      <div class="ing-row-input">
-        <input placeholder="Ingredient name" value="Aloe Vera Extract" oninput="liveUpdate()">
-        <input placeholder="Amount" value="20%"  oninput="liveUpdate()">
-      </div>
-      <div class="ing-row-input">
-        <input placeholder="Ingredient name" value="Salicylic Acid"   oninput="liveUpdate()">
-        <input placeholder="Amount" value="10%"  oninput="liveUpdate()">
-      </div>
-      <div class="ing-row-input">
-        <input placeholder="Ingredient name" value="Calcium Carbonate" oninput="liveUpdate()">
-        <input placeholder="Amount" value="30%"  oninput="liveUpdate()">
-      </div>
-      <div class="ing-row-input">
-        <input placeholder="Ingredient name" value="Zinc Oxide"       oninput="liveUpdate()">
-        <input placeholder="Amount" value="25%"  oninput="liveUpdate()">
-      </div>
-      <div class="ing-row-input">
-        <input placeholder="Ingredient name" value="Vitamin E Oil"    oninput="liveUpdate()">
-        <input placeholder="Amount" value="10%"  oninput="liveUpdate()">
-      </div>
-    </div>
-    <button class="btn btn-primary" style="margin-top:10px;flex:none;padding:8px 16px;font-size:12px;" onclick="addIngredient()">+ Add Ingredient</button>
-
-    <!-- Company -->
-    <div class="section-title">Company Details</div>
-    <div class="form-grid full">
-      <div class="field">
-        <label>Marketed By</label>
-        <textarea id="f_marketed" oninput="liveUpdate()">Prairie Wellness Biocare Inc.
-840 7 Avenue SW, Suite 1200
-Calgary, AB T2P 3G2
-Canada</textarea>
-      </div>
-    </div>
-    <div class="form-grid full">
-      <div class="field">
-        <label>Manufactured By</label>
-        <textarea id="f_mfgby" oninput="liveUpdate()">Calgary Dermacare Manufacturing Ltd.
-2210 32 Avenue NE
-Calgary, AB T2E 6T4
-Canada</textarea>
-      </div>
-    </div>
-    <div class="form-grid full">
-      <div class="field">
-        <label>Marketed By Address (short)</label>
-        <input id="f_mktaddr" value="840 7 Avenue SW, Calgary, AB T2P 3G2, Canada" oninput="liveUpdate()">
-      </div>
-    </div>
-
-    <!-- Action Buttons -->
-    <div class="btn-row">
-      <button class="btn btn-primary" id="updateBtn" onclick="updateDesign()">&#9654; Update Design</button>
-      <button class="btn btn-secondary" onclick="createMultiple()">&#128194; Create Multiple Designs</button>
-    </div>
-  </div>
-
-  <!-- ══ PREVIEW PANEL ══ -->
-  <div class="preview-panel" id="previewPanel">
-    <div class="preview-label">Live Preview</div>
-
-    <!-- BOX PREVIEW -->
-    <div class="box-wrap" id="boxPreview"></div>
-
-    <!-- MULTIPLE DESIGNS -->
-    <div class="multi-area" id="multiArea" style="display:none;">
-      <div class="multi-label">Generated Designs — Click &#11015; to Download</div>
-      <div class="multi-row" id="multiRow"></div>
-    </div>
-  </div>
-
-</div>
+<!-- ALL DESIGN PANELS rendered here -->
+<div id="designsRoot"></div>
 
 <script>
-// ── DATA COLLECTION ───────────────────────────────────────────────
-function getData() {
+// ─────────────────────────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────────────────────────
+var designs = [];   // array of { id, name, data }
+var activeId = null;
+var nextId   = 1;
+
+// ─────────────────────────────────────────────────────────────────
+// DEFAULT DATA
+// ─────────────────────────────────────────────────────────────────
+function defaultData(label) {
+  return {
+    name:      label || 'Design',
+    brand:     'Abraham',
+    qty:       '20Q',
+    ptype:     'Medicated Ointment',
+    volume:    '20 ml',
+    effective: 'Effective Result',
+    mrp:       '520 CAD',
+    batch:     'MFG-CAN-AB-2459',
+    mfgdate:   'April 2026',
+    expdate:   'C000G25b',
+    expmy:     'May 2026',
+    storage:   'Store in a cool and dry place.',
+    usage:     'Apply a thin layer to the affected area twice daily or as directed by a healthcare professional.',
+    marketed:  'Prairie Wellness Biocare Inc.\n840 7 Avenue SW, Suite 1200\nCalgary, AB T2P 3G2\nCanada',
+    mfgby:     'Calgary Dermacare Manufacturing Ltd.\n2210 32 Avenue NE\nCalgary, AB T2E 6T4\nCanada',
+    mktaddr:   '840 7 Avenue SW, Calgary, AB T2P 3G2, Canada',
+    ingredients: [
+      { name: 'Aloe Vera Extract',  amount: '20%' },
+      { name: 'Salicylic Acid',     amount: '10%' },
+      { name: 'Calcium Carbonate',  amount: '30%' },
+      { name: 'Zinc Oxide',         amount: '25%' },
+      { name: 'Vitamin E Oil',      amount: '10%' }
+    ]
+  };
+}
+
+// ─────────────────────────────────────────────────────────────────
+// ADD / REMOVE / SWITCH DESIGNS
+// ─────────────────────────────────────────────────────────────────
+function addNewDesign(customData) {
+  var id   = nextId++;
+  var name = customData ? customData.name : ('Design ' + id);
+  var data = customData || defaultData(name);
+  data.name = name;
+  designs.push({ id: id, name: name, data: data });
+  renderTabsBar();
+  renderAllPanels();
+  switchToDesign(id);
+}
+
+function removeDesign(id) {
+  if (designs.length <= 1) return; // keep at least one
+  designs = designs.filter(function(d){ return d.id !== id; });
+  if (activeId === id) activeId = designs[0].id;
+  renderTabsBar();
+  renderAllPanels();
+  switchToDesign(activeId);
+}
+
+function switchToDesign(id) {
+  activeId = id;
+  // update tab active states
+  document.querySelectorAll('.tab').forEach(function(t) {
+    t.classList.toggle('active', parseInt(t.dataset.id) === id);
+  });
+  // show/hide panels
+  document.querySelectorAll('.design-panels').forEach(function(p) {
+    p.classList.toggle('active', parseInt(p.dataset.id) === id);
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────
+// RENDER TABS
+// ─────────────────────────────────────────────────────────────────
+function renderTabsBar() {
+  var bar = document.getElementById('tabsBar');
+  bar.innerHTML = '';
+  designs.forEach(function(d) {
+    var tab = document.createElement('div');
+    tab.className = 'tab' + (d.id === activeId ? ' active' : '');
+    tab.dataset.id = d.id;
+    tab.innerHTML = '<span class="tab-name">' + esc(d.name) + '</span>'
+      + (designs.length > 1 ? '<span class="tab-close" onclick="event.stopPropagation();removeDesign(' + d.id + ')">&#215;</span>' : '');
+    tab.addEventListener('click', function(){ switchToDesign(d.id); });
+    bar.appendChild(tab);
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────
+// RENDER ALL PANELS
+// ─────────────────────────────────────────────────────────────────
+function renderAllPanels() {
+  var root = document.getElementById('designsRoot');
+  root.innerHTML = '';
+  designs.forEach(function(d) {
+    root.appendChild(buildPanel(d));
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────
+// BUILD ONE DESIGN PANEL (form + preview)
+// ─────────────────────────────────────────────────────────────────
+function buildPanel(design) {
+  var id = design.id;
+  var d  = design.data;
+
+  var wrapper = document.createElement('div');
+  wrapper.className = 'design-panels' + (id === activeId ? ' active' : '');
+  wrapper.dataset.id = id;
+
+  // ── FORM SIDE ──
+  var formSide = document.createElement('div');
+  formSide.className = 'form-side';
+  formSide.innerHTML = formHTML(id, d);
+
+  // ── PREVIEW SIDE ──
+  var previewSide = document.createElement('div');
+  previewSide.className = 'preview-side';
+  previewSide.innerHTML = '<div class="preview-tag">Live Preview — ' + esc(d.name) + '</div>'
+    + '<div class="box-wrap" id="preview_' + id + '"></div>';
+
+  wrapper.appendChild(formSide);
+  wrapper.appendChild(previewSide);
+  return wrapper;
+}
+
+// ─────────────────────────────────────────────────────────────────
+// FORM HTML
+// ─────────────────────────────────────────────────────────────────
+function formHTML(id, d) {
+  var ings = '';
+  (d.ingredients || []).forEach(function(ing, i) {
+    ings += ingRowHTML(id, ing.name, ing.amount);
+  });
+
+  return '<div class="form-header">'
+    + '<input class="design-name-input" id="name_' + id + '" value="' + esc(d.name) + '" oninput="onNameChange(' + id + ')" placeholder="Design name">'
+    + '</div>'
+    + '<div class="form-scroll">'
+
+    + '<div class="fg fg-2">'
+    + field('Brand Name',    'brand_'    + id, d.brand)
+    + field('Quantity',      'qty_'      + id, d.qty)
+    + '</div>'
+    + '<div class="fg fg-2">'
+    + field('Product Type',  'ptype_'    + id, d.ptype)
+    + field('Volume/Weight', 'volume_'   + id, d.volume)
+    + '</div>'
+    + '<div class="fg fg-2">'
+    + field('Effective Text','effective_'+ id, d.effective)
+    + field('MRP / Price',   'mrp_'      + id, d.mrp)
+    + '</div>'
+    + '<div class="fg fg-2">'
+    + field('Batch No.',     'batch_'    + id, d.batch)
+    + field('Mfg. Date',     'mfgdate_'  + id, d.mfgdate)
+    + '</div>'
+    + '<div class="fg fg-2">'
+    + field('Exp. Code',     'expdate_'  + id, d.expdate)
+    + field('Exp. Date',     'expmy_'    + id, d.expmy)
+    + '</div>'
+
+    + '<div class="sec-title">Storage &amp; Usage</div>'
+    + '<div class="fg fg-1">'
+    + fieldTA('Storage Instructions', 'storage_' + id, d.storage)
+    + '</div>'
+    + '<div class="fg fg-1">'
+    + fieldTA('Usage Instructions',   'usage_'   + id, d.usage)
+    + '</div>'
+
+    + '<div class="sec-title">Ingredients</div>'
+    + '<div class="ing-group" id="ingGroup_' + id + '">' + ings + '</div>'
+    + '<button class="add-ing-btn" onclick="addIngredientRow(' + id + ')">+ Add Ingredient</button>'
+
+    + '<div class="sec-title">Company Details</div>'
+    + '<div class="fg fg-1">'
+    + fieldTA('Marketed By',          'marketed_'  + id, d.marketed)
+    + '</div>'
+    + '<div class="fg fg-1">'
+    + fieldTA('Manufactured By',      'mfgby_'     + id, d.mfgby)
+    + '</div>'
+    + '<div class="fg fg-1">'
+    + field('Marketed Address (short)', 'mktaddr_' + id, d.mktaddr)
+    + '</div>'
+
+    + '</div>' // end form-scroll
+
+    + '<div class="form-footer">'
+    + '<button class="fbtn fbtn-blue" onclick="liveUpdate(' + id + ')">&#9654; Update Preview</button>'
+    + '<button class="fbtn fbtn-gold" onclick="downloadDesign(' + id + ')">&#11015; Download HTML</button>'
+    + '</div>';
+}
+
+function field(label, inputId, value) {
+  return '<div class="field"><label>' + label + '</label>'
+    + '<input id="' + inputId + '" value="' + esc(value) + '" oninput="liveUpdate(' + inputId.split('_').pop() + ')">'
+    + '</div>';
+}
+function fieldTA(label, inputId, value) {
+  var id = inputId.split('_').pop();
+  return '<div class="field"><label>' + label + '</label>'
+    + '<textarea id="' + inputId + '" oninput="liveUpdate(' + id + ')">' + esc(value) + '</textarea>'
+    + '</div>';
+}
+function ingRowHTML(designId, name, amount) {
+  return '<div class="ing-row">'
+    + '<input placeholder="Ingredient name" value="' + esc(name) + '" oninput="liveUpdate(' + designId + ')">'
+    + '<input placeholder="Amount" value="' + esc(amount) + '" oninput="liveUpdate(' + designId + ')">'
+    + '<button class="ing-del" onclick="this.parentElement.remove();liveUpdate(' + designId + ')">&#215;</button>'
+    + '</div>';
+}
+
+// ─────────────────────────────────────────────────────────────────
+// ADD INGREDIENT ROW
+// ─────────────────────────────────────────────────────────────────
+function addIngredientRow(id) {
+  var group = document.getElementById('ingGroup_' + id);
+  var div = document.createElement('div');
+  div.innerHTML = ingRowHTML(id, '', '');
+  group.appendChild(div.firstChild);
+}
+
+// ─────────────────────────────────────────────────────────────────
+// NAME CHANGE
+// ─────────────────────────────────────────────────────────────────
+function onNameChange(id) {
+  var val = document.getElementById('name_' + id).value;
+  var design = designs.find(function(d){ return d.id === id; });
+  if (design) design.name = val;
+  // update tab label
+  var tab = document.querySelector('.tab[data-id="' + id + '"] .tab-name');
+  if (tab) tab.textContent = val;
+  // update preview tag
+  var ptag = document.querySelector('#preview_' + id);
+  if (ptag && ptag.previousSibling) ptag.previousSibling.textContent = 'Live Preview — ' + val;
+}
+
+// ─────────────────────────────────────────────────────────────────
+// COLLECT DATA FROM FORM FOR A GIVEN DESIGN ID
+// ─────────────────────────────────────────────────────────────────
+function collectData(id) {
+  function v(suffix) {
+    var el = document.getElementById(suffix + '_' + id);
+    return el ? el.value.trim() : '';
+  }
   var ings = [];
-  var rows = document.querySelectorAll('#ingGroup .ing-row-input');
-  rows.forEach(function(r) {
-    var inputs = r.querySelectorAll('input');
-    if (inputs[0].value.trim()) {
-      ings.push({ name: inputs[0].value.trim(), amount: inputs[1].value.trim() });
+  var rows = document.querySelectorAll('#ingGroup_' + id + ' .ing-row');
+  rows.forEach(function(row) {
+    var inputs = row.querySelectorAll('input');
+    if (inputs[0] && inputs[0].value.trim()) {
+      ings.push({ name: inputs[0].value.trim(), amount: inputs[1] ? inputs[1].value.trim() : '' });
     }
   });
   return {
-    brand:     document.getElementById('f_brand').value.trim()    || 'Brand Name',
-    qty:       document.getElementById('f_qty').value.trim()      || '20Q',
-    ptype:     document.getElementById('f_ptype').value.trim()    || 'Ointment',
-    volume:    document.getElementById('f_volume').value.trim()   || '20 ml',
-    effective: document.getElementById('f_effective').value.trim()|| 'Effective Result',
-    mrp:       document.getElementById('f_mrp').value.trim()      || '0.00',
-    batch:     document.getElementById('f_batch').value.trim()    || '',
-    mfgdate:   document.getElementById('f_mfgdate').value.trim()  || '',
-    expdate:   document.getElementById('f_expdate').value.trim()  || '',
-    expmy:     document.getElementById('f_expmy').value.trim()    || '',
-    storage:   document.getElementById('f_storage').value.trim()  || '',
-    usage:     document.getElementById('f_usage').value.trim()    || '',
-    marketed:  document.getElementById('f_marketed').value.trim() || '',
-    mfgby:     document.getElementById('f_mfgby').value.trim()    || '',
-    mktaddr:   document.getElementById('f_mktaddr').value.trim()  || '',
+    name:        v('name')      || 'Design',
+    brand:       v('brand')     || 'Brand',
+    qty:         v('qty')       || '',
+    ptype:       v('ptype')     || '',
+    volume:      v('volume')    || '',
+    effective:   v('effective') || '',
+    mrp:         v('mrp')       || '',
+    batch:       v('batch')     || '',
+    mfgdate:     v('mfgdate')   || '',
+    expdate:     v('expdate')   || '',
+    expmy:       v('expmy')     || '',
+    storage:     v('storage')   || '',
+    usage:       v('usage')     || '',
+    marketed:    v('marketed')  || '',
+    mfgby:       v('mfgby')     || '',
+    mktaddr:     v('mktaddr')   || '',
     ingredients: ings
   };
 }
 
-// ── ADD INGREDIENT ROW ────────────────────────────────────────────
-function addIngredient() {
-  var g = document.getElementById('ingGroup');
-  var div = document.createElement('div');
-  div.className = 'ing-row-input';
-  div.innerHTML = '<input placeholder="Ingredient name" oninput="liveUpdate()"><input placeholder="Amount" oninput="liveUpdate()">';
-  g.appendChild(div);
+// ─────────────────────────────────────────────────────────────────
+// LIVE UPDATE PREVIEW
+// ─────────────────────────────────────────────────────────────────
+function liveUpdate(id) {
+  var container = document.getElementById('preview_' + id);
+  if (!container) return;
+  var d = collectData(id);
+  container.innerHTML = buildBoxInnerHTML(d);
 }
 
-// ── LIVE UPDATE (fires on every keystroke) ────────────────────────
-function liveUpdate() {
-  renderBox(getData(), document.getElementById('boxPreview'));
-}
-
-// ── UPDATE DESIGN BUTTON ──────────────────────────────────────────
-function updateDesign() {
-  liveUpdate();
-  var btn = document.getElementById('updateBtn');
-  btn.textContent = '✔ Updated!';
-  btn.style.background = '#1e7e3e';
-  setTimeout(function() {
-    btn.textContent = '▶ Update Design';
-    btn.style.background = '';
-  }, 1800);
-}
-
-// ── CREATE MULTIPLE DESIGNS ───────────────────────────────────────
-// Generates 3 variants: original, doubled price, halved qty label
-function createMultiple() {
-  var d = getData();
-
-  var variants = [
-    Object.assign({}, d, { _label: 'Design 1 — Standard',    _file: 'design-standard.html' }),
-    Object.assign({}, d, { _label: 'Design 2 — Premium',     _file: 'design-premium.html',  effective: 'PREMIUM FORMULA', mrp: 'PREMIUM' }),
-    Object.assign({}, d, { _label: 'Design 3 — Travel Size', _file: 'design-travel.html',   qty: '10Q', volume: '10 ml', mrp: 'TRAVEL' })
-  ];
-
-  var multiArea = document.getElementById('multiArea');
-  var multiRow  = document.getElementById('multiRow');
-  multiRow.innerHTML = '';
-  multiArea.style.display = 'flex';
-
-  variants.forEach(function(v) {
-    var card = document.createElement('div');
-    card.className = 'mini-card';
-    card.innerHTML =
-      '<button class="mc-dl-btn" onclick="downloadVariant(event, \'' + v._file + '\', ' + JSON.stringify(v).replace(/'/g,"&#39;") + ')">&#11015; DL</button>'
-      + '<div class="mc-brand">' + v.brand + '</div>'
-      + '<div class="mc-sub">' + v.ptype + '</div>'
-      + '<div class="mc-mrp">MRP: ' + v.mrp + '</div>'
-      + '<div class="mc-ptype">' + v.qty + ' · ' + v.volume + '</div>'
-      + '<div style="margin-top:6px;font-size:9px;color:rgba(255,255,255,0.35);">' + v._label + '</div>';
-    multiRow.appendChild(card);
-  });
-
-  multiArea.scrollIntoView({ behavior: 'smooth' });
-}
-
-// ── DOWNLOAD VARIANT ──────────────────────────────────────────────
-function downloadVariant(e, filename, data) {
-  e.stopPropagation();
-  var html = generateFullHTML(data);
-  downloadHTML(filename, html);
-}
-
-function downloadHTML(filename, html) {
-  var blob = new Blob([html], { type: 'text/html' });
-  var url  = URL.createObjectURL(blob);
-  var a    = document.createElement('a');
-  a.href = url; a.download = filename;
-  document.body.appendChild(a); a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
-
-// ── RENDER BOX INTO A CONTAINER ──────────────────────────────────
-function renderBox(d, container) {
-  container.innerHTML = buildBoxHTML(d, false);
-}
-
-// ── SVG PILL IMAGE ────────────────────────────────────────────────
-function pillSVG(w, h, brand, sub) {
+// ─────────────────────────────────────────────────────────────────
+// BUILD BOX INNER HTML
+// ─────────────────────────────────────────────────────────────────
+function pillSVG(w, h, brand) {
+  var hw = w * 0.5, hh = h * 0.5;
   return '<svg viewBox="0 0 ' + w + ' ' + h + '" width="' + w + '" height="' + h + '" xmlns="http://www.w3.org/2000/svg">'
     + '<defs>'
-    + '<radialGradient id="pg1" cx="35%" cy="30%"><stop offset="0%" stop-color="#aee4ff"/><stop offset="100%" stop-color="#0055aa"/></radialGradient>'
-    + '<radialGradient id="cg1" cx="40%" cy="35%"><stop offset="0%" stop-color="#ffe090"/><stop offset="100%" stop-color="#c97a10"/></radialGradient>'
+    + '<radialGradient id="pg_' + w + '" cx="35%" cy="30%"><stop offset="0%" stop-color="#aee4ff"/><stop offset="100%" stop-color="#0055aa"/></radialGradient>'
+    + '<radialGradient id="cg_' + w + '" cx="40%" cy="35%"><stop offset="0%" stop-color="#ffe090"/><stop offset="100%" stop-color="#c97a10"/></radialGradient>'
     + '</defs>'
-    + '<rect x="' + (w*0.1) + '" y="' + (h*0.28) + '" width="' + (w*0.8) + '" height="' + (h*0.34) + '" rx="' + (h*0.17) + '" fill="url(#pg1)"/>'
-    + '<line x1="' + (w*0.5) + '" y1="' + (h*0.28) + '" x2="' + (w*0.5) + '" y2="' + (h*0.62) + '" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>'
-    + '<rect x="' + (w*0.5) + '" y="' + (h*0.28) + '" width="' + (w*0.4) + '" height="' + (h*0.34) + '" rx="' + (h*0.17) + '" fill="url(#cg1)"/>'
-    + '<rect x="' + (w*0.5) + '" y="' + (h*0.28) + '" width="' + (w*0.2) + '" height="' + (h*0.34) + '" fill="url(#cg1)"/>'
-    + (brand ? '<text x="' + (w*0.5) + '" y="' + (h*0.82) + '" text-anchor="middle" font-size="' + Math.max(5, w*0.07) + '" font-weight="700" fill="white" font-family="Montserrat,sans-serif">' + brand.toUpperCase().substring(0,8) + '</text>' : '')
-    + '<ellipse cx="' + (w*0.3) + '" cy="' + (h*0.82) + '" rx="' + (w*0.11) + '" ry="' + (h*0.08) + '" fill="#4db8ff" opacity="0.7"/>'
-    + '<ellipse cx="' + (w*0.72) + '" cy="' + (h*0.8) + '" rx="' + (w*0.1) + '" ry="' + (h*0.07) + '" fill="#c9a84c" opacity="0.7"/>'
+    + '<rect x="' + (w*.1) + '" y="' + (h*.28) + '" width="' + (w*.8) + '" height="' + (h*.34) + '" rx="' + (h*.17) + '" fill="url(#pg_' + w + ')"/>'
+    + '<line x1="' + hw + '" y1="' + (h*.28) + '" x2="' + hw + '" y2="' + (h*.62) + '" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>'
+    + '<rect x="' + hw + '" y="' + (h*.28) + '" width="' + (w*.4) + '" height="' + (h*.34) + '" rx="' + (h*.17) + '" fill="url(#cg_' + w + ')"/>'
+    + '<rect x="' + hw + '" y="' + (h*.28) + '" width="' + (w*.2) + '" height="' + (h*.34) + '" fill="url(#cg_' + w + ')"/>'
+    + '<text x="' + hw + '" y="' + (h*.82) + '" text-anchor="middle" font-size="' + Math.max(5,w*.07) + '" font-weight="700" fill="white" font-family="Montserrat,sans-serif">' + (brand||'').toUpperCase().substring(0,8) + '</text>'
+    + '<ellipse cx="' + (w*.28) + '" cy="' + (h*.82) + '" rx="' + (w*.1) + '" ry="' + (h*.08) + '" fill="#4db8ff" opacity="0.7"/>'
+    + '<ellipse cx="' + (w*.72) + '" cy="' + (h*.8) + '" rx="' + (w*.1) + '" ry="' + (h*.07) + '" fill="#c9a84c" opacity="0.7"/>'
     + '</svg>';
 }
 
-// ── BUILD BOX HTML (inline, no external files) ────────────────────
-function buildBoxHTML(d, standalone) {
-  var BU = d.brand.toUpperCase();
+function buildBoxInnerHTML(d) {
+  var BU  = d.brand.toUpperCase();
+  var PTU = d.ptype.toUpperCase();
 
-  // Ingredients list
-  var ingLines = '';
-  (d.ingredients || []).forEach(function(ing) {
-    ingLines += '<div class="bing-row"><span style="font-size:6px;color:#d0eaff;">' + ing.name + '</span>'
-      + '<span style="font-size:6px;color:#a0d4ff;font-weight:600;">' + ing.amount + '</span></div>';
+  var ingHTML = '';
+  (d.ingredients||[]).forEach(function(ing){
+    ingHTML += '<div style="display:flex;justify-content:space-between;margin-bottom:2px;">'
+      + '<span style="font-size:6px;color:#d0eaff;">' + esc(ing.name) + '</span>'
+      + '<span style="font-size:6px;color:#a0d4ff;font-weight:600;">' + esc(ing.amount) + '</span>'
+      + '</div>';
   });
+
+  var storHTML = (d.storage + '\nKeep out of reach of children.').split('\n')
+    .map(function(l){ return l.trim(); }).filter(Boolean)
+    .map(function(l){ return '<div style="font-size:5.5px;color:#88bbdd;text-align:center;font-style:italic;">' + esc(l) + '</div>'; })
+    .join('');
+
+  var mktLines = d.marketed.replace(/\n/g,'<br>');
+  var mfgLines = d.mfgby.replace(/\n/g,'<br>');
 
   var LEFT =
     '<div style="display:flex;flex-direction:column;">'
-    + '<div class="flap" style="width:100px;border-radius:6px 6px 0 0;">'
-    +   '<div style="font-family:\'Cinzel\',serif;font-size:6.5px;color:#c9a84c;letter-spacing:2px;">' + BU + '</div>'
-    +   '<div style="font-size:5px;color:#a0d4ff;letter-spacing:1px;">' + d.ptype.toUpperCase() + '</div>'
+    + '<div class="flap" style="width:95px;border-radius:6px 6px 0 0;">'
+    +   '<div style="font-family:\'Cinzel\',serif;font-size:6px;color:#c9a84c;letter-spacing:2px;">' + BU + '</div>'
+    +   '<div style="font-size:5px;color:#a0d4ff;letter-spacing:1px;">' + PTU.substring(0,14) + '</div>'
     + '</div>'
-    + '<div class="box-panel" style="width:100px;min-height:300px;padding:8px 6px;border-radius:0 0 0 5px;">'
-    +   '<div class="gstrip">' + d.effective + '</div>'
-    +   '<div class="rxbadge" style="width:32px;height:32px;margin:7px auto 4px;"><span style="font-family:\'Cinzel\',serif;font-size:12px;color:#c9a84c;font-weight:700;">Rx</span></div>'
-    +   '<div class="bbrand" style="font-size:11px;text-align:center;">' + d.brand + '</div>'
-    +   '<div class="bsub" style="font-size:5px;text-align:center;">' + d.ptype + '</div>'
+    + '<div class="box-panel" style="width:95px;min-height:295px;padding:7px 5px;border-radius:0 0 0 5px;">'
+    +   '<div class="gstrip">' + esc(d.effective) + '</div>'
+    +   '<div class="rxbadge" style="width:30px;height:30px;margin:6px auto 3px;"><span style="font-family:\'Cinzel\',serif;font-size:11px;color:#c9a84c;font-weight:700;">Rx</span></div>'
+    +   '<div class="bbrand" style="font-size:10px;text-align:center;">' + esc(d.brand) + '</div>'
+    +   '<div class="bsub" style="font-size:4.5px;text-align:center;">' + esc(d.ptype) + '</div>'
     +   '<div class="bshim"></div>'
-    +   '<div class="bpill" style="width:58px;height:58px;margin:4px auto;">' + pillSVG(58,58,d.brand,'') + '</div>'
+    +   '<div class="bpill" style="width:55px;height:55px;margin:3px auto;">' + pillSVG(55,55,d.brand) + '</div>'
     +   '<div class="bcarea" style="margin-top:auto;">'
-    +     '<div style="font-size:5px;color:#88aabb;border:1px dashed rgba(77,184,255,0.3);padding:1px 4px;border-radius:2px;">COMPANY LOGO</div>'
-    +     '<div style="font-family:\'Cinzel\',serif;font-size:5.5px;color:#c9a84c;margin-top:2px;">' + d.brand + '</div>'
+    +     '<div style="font-size:4.5px;color:#88aabb;border:1px dashed rgba(77,184,255,0.3);padding:1px 4px;border-radius:2px;">COMPANY LOGO</div>'
+    +     '<div style="font-family:\'Cinzel\',serif;font-size:5px;color:#c9a84c;margin-top:1px;">' + esc(d.brand) + '</div>'
     +   '</div>'
-    +   '<div class="bdot" style="width:30px;height:30px;bottom:50px;left:-8px;"></div>'
-    +   '<div class="box-wave"><svg viewBox="0 0 100 65" preserveAspectRatio="none" width="100%" height="100%"><path d="M0,28 Q25,8 50,28 Q75,48 100,28 L100,65 L0,65 Z" fill="#4db8ff"/></svg></div>'
+    +   '<div class="bdot" style="width:28px;height:28px;bottom:48px;left:-7px;"></div>'
+    +   '<div class="box-wave"><svg viewBox="0 0 95 65" preserveAspectRatio="none" width="100%" height="100%"><path d="M0,26 Q24,8 48,26 Q71,44 95,26 L95,65 L0,65 Z" fill="#4db8ff"/></svg></div>'
     + '</div></div>';
 
   var FRONT =
     '<div style="display:flex;flex-direction:column;">'
-    + '<div class="flap" style="width:180px;">'
-    +   '<div style="font-family:\'Cinzel\',serif;font-size:7px;color:#c9a84c;letter-spacing:2px;">' + BU + '</div>'
-    +   '<div style="background:linear-gradient(90deg,#003a7d,#0077e6,#003a7d);border:1px solid rgba(77,184,255,0.4);border-radius:3px;padding:2px 8px;font-size:5.5px;font-weight:700;color:#c9a84c;letter-spacing:1px;">' + d.effective.toUpperCase() + '</div>'
+    + '<div class="flap" style="width:175px;">'
+    +   '<div style="font-family:\'Cinzel\',serif;font-size:6.5px;color:#c9a84c;letter-spacing:2px;">' + BU + '</div>'
+    +   '<div style="background:linear-gradient(90deg,#003a7d,#0077e6,#003a7d);border:1px solid rgba(77,184,255,0.4);border-radius:3px;padding:2px 8px;font-size:5.5px;font-weight:700;color:#c9a84c;letter-spacing:1px;">' + esc(d.effective).toUpperCase() + '</div>'
     + '</div>'
-    + '<div class="box-panel" style="width:180px;min-height:300px;padding:10px 8px 8px;">'
-    +   '<div class="gstrip">' + d.qty + ' · ' + d.effective + '</div>'
-    +   '<div style="display:flex;align-items:center;gap:7px;width:100%;margin-top:8px;">'
-    +     '<div class="rxbadge" style="width:38px;height:38px;flex-shrink:0;"><span style="font-family:\'Cinzel\',serif;font-size:14px;color:#c9a84c;font-weight:700;">Rx</span></div>'
-    +     '<div><div class="bbrand" style="font-size:17px;">' + d.brand + '</div><div class="bsub" style="font-size:5.5px;">' + d.ptype + '</div></div>'
+    + '<div class="box-panel" style="width:175px;min-height:295px;padding:9px 8px 7px;">'
+    +   '<div class="gstrip">' + esc(d.qty) + ' · ' + esc(d.effective) + '</div>'
+    +   '<div style="display:flex;align-items:center;gap:6px;width:100%;margin-top:7px;">'
+    +     '<div class="rxbadge" style="width:36px;height:36px;flex-shrink:0;"><span style="font-family:\'Cinzel\',serif;font-size:13px;color:#c9a84c;font-weight:700;">Rx</span></div>'
+    +     '<div><div class="bbrand" style="font-size:16px;">' + esc(d.brand) + '</div><div class="bsub" style="font-size:5px;">' + esc(d.ptype) + '</div></div>'
     +   '</div>'
-    +   '<div class="bptype" style="margin-top:3px;">' + d.ptype + '</div>'
+    +   '<div style="font-size:6px;font-weight:600;color:#a0d4ff;letter-spacing:2px;text-transform:uppercase;text-align:center;margin-top:2px;">' + esc(d.ptype) + '</div>'
     +   '<div class="bshim"></div>'
-    +   '<div class="bpill" style="width:95px;height:82px;margin:4px auto;">' + pillSVG(95,82,d.brand,d.ptype) + '</div>'
-    +   '<div class="bqbadge" style="width:44px;height:44px;margin:4px auto;">'
-    +     '<div class="bbrand" style="font-size:15px;line-height:1;">' + d.qty + '</div>'
-    +     '<div style="font-size:5px;color:#c9a84c;letter-spacing:1px;font-weight:700;">' + d.volume + '</div>'
+    +   '<div class="bpill" style="width:90px;height:78px;margin:3px auto;">' + pillSVG(90,78,d.brand) + '</div>'
+    +   '<div class="bqbadge" style="width:42px;height:42px;margin:4px auto;">'
+    +     '<div class="bbrand" style="font-size:14px;line-height:1;">' + esc(d.qty) + '</div>'
+    +     '<div style="font-size:5px;color:#c9a84c;letter-spacing:1px;font-weight:700;">' + esc(d.volume) + '</div>'
     +   '</div>'
-    +   '<div class="gstrip" style="margin-top:auto;">' + d.effective + '</div>'
-    +   '<div class="bdot" style="width:45px;height:45px;top:-8px;right:-6px;"></div>'
-    +   '<div class="box-wave"><svg viewBox="0 0 180 65" preserveAspectRatio="none" width="100%" height="100%"><path d="M0,28 Q45,8 90,28 Q135,48 180,28 L180,65 L0,65 Z" fill="#4db8ff"/><path d="M0,44 Q45,26 90,44 Q135,62 180,44 L180,65 L0,65 Z" fill="#0066cc"/></svg></div>'
+    +   '<div class="gstrip" style="margin-top:auto;">' + esc(d.effective) + '</div>'
+    +   '<div class="bdot" style="width:42px;height:42px;top:-7px;right:-5px;"></div>'
+    +   '<div class="box-wave"><svg viewBox="0 0 175 65" preserveAspectRatio="none" width="100%" height="100%"><path d="M0,26 Q44,8 88,26 Q131,44 175,26 L175,65 L0,65 Z" fill="#4db8ff"/><path d="M0,42 Q44,26 88,42 Q131,58 175,42 L175,65 L0,65 Z" fill="#0066cc"/></svg></div>'
     + '</div></div>';
-
-  var storageLines = (d.storage + '\n' + 'Keep out of reach of children.').split('\n').map(function(l){ return l.trim(); }).filter(Boolean);
-  var storageHTML = storageLines.map(function(l){ return '<div style="font-size:5.5px;color:#88bbdd;text-align:center;font-style:italic;">' + l + '</div>'; }).join('');
 
   var BACK =
     '<div style="display:flex;flex-direction:column;">'
-    + '<div class="flap" style="width:180px;">'
-    +   '<div style="font-family:\'Cinzel\',serif;font-size:6.5px;color:#c9a84c;letter-spacing:2px;">INGREDIENTS &amp; INFO</div>'
+    + '<div class="flap" style="width:175px;">'
+    +   '<div style="font-family:\'Cinzel\',serif;font-size:6px;color:#c9a84c;letter-spacing:2px;">INGREDIENTS &amp; INFO</div>'
     + '</div>'
-    + '<div class="box-panel" style="width:180px;min-height:300px;padding:10px 8px 8px;">'
-    +   '<div class="gstrip">' + d.qty + ' · ' + d.effective + '</div>'
-    +   '<div style="display:flex;align-items:center;gap:6px;width:100%;margin-top:7px;">'
-    +     '<div class="rxbadge" style="width:30px;height:30px;flex-shrink:0;"><span style="font-family:\'Cinzel\',serif;font-size:11px;color:#c9a84c;font-weight:700;">Rx</span></div>'
-    +     '<div><div class="bbrand" style="font-size:13px;">' + d.brand + '</div><div class="bsub" style="font-size:5px;">' + d.ptype + '</div></div>'
+    + '<div class="box-panel" style="width:175px;min-height:295px;padding:9px 8px 7px;">'
+    +   '<div class="gstrip">' + esc(d.qty) + ' · ' + esc(d.effective) + '</div>'
+    +   '<div style="display:flex;align-items:center;gap:6px;width:100%;margin-top:6px;">'
+    +     '<div class="rxbadge" style="width:28px;height:28px;flex-shrink:0;"><span style="font-family:\'Cinzel\',serif;font-size:10px;color:#c9a84c;font-weight:700;">Rx</span></div>'
+    +     '<div><div class="bbrand" style="font-size:12px;">' + esc(d.brand) + '</div><div class="bsub" style="font-size:4.5px;">' + esc(d.ptype) + '</div></div>'
     +   '</div>'
     +   '<div class="bshim"></div>'
     +   '<div style="width:100%;margin-top:3px;">'
-    +     '<div style="font-size:5.5px;font-weight:700;color:#c9a84c;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid rgba(77,184,255,0.3);padding-bottom:2px;margin-bottom:3px;">Ingredients — Contains</div>'
-    +     ingLines
+    +     '<div style="font-size:5px;font-weight:700;color:#c9a84c;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid rgba(77,184,255,0.3);padding-bottom:2px;margin-bottom:3px;">Ingredients — Contains</div>'
+    +     ingHTML
     +   '</div>'
-    +   '<div style="margin-top:5px;">' + storageHTML + '</div>'
-    +   '<div class="bqbadge" style="width:40px;height:40px;margin:5px auto;">'
-    +     '<div class="bbrand" style="font-size:14px;line-height:1;">' + d.qty + '</div>'
-    +     '<div style="font-size:5px;color:#c9a84c;letter-spacing:1px;font-weight:700;">' + d.volume + '</div>'
+    +   '<div style="margin-top:4px;">' + storHTML + '</div>'
+    +   '<div class="bqbadge" style="width:38px;height:38px;margin:4px auto;">'
+    +     '<div class="bbrand" style="font-size:13px;line-height:1;">' + esc(d.qty) + '</div>'
+    +     '<div style="font-size:4.5px;color:#c9a84c;letter-spacing:1px;font-weight:700;">' + esc(d.volume) + '</div>'
     +   '</div>'
     +   '<div class="bcarea" style="margin-top:auto;">'
-    +     '<div style="font-size:5px;color:#88aabb;border:1px dashed rgba(77,184,255,0.3);padding:1px 6px;border-radius:2px;">COMPANY LOGO</div>'
-    +     '<div style="font-family:\'Cinzel\',serif;font-size:6px;color:#c9a84c;margin-top:2px;">' + d.brand + '</div>'
-    +     '<div style="font-size:5px;color:#88bbdd;text-align:center;line-height:1.5;margin-top:1px;">' + d.mktaddr + '</div>'
+    +     '<div style="font-size:4.5px;color:#88aabb;border:1px dashed rgba(77,184,255,0.3);padding:1px 5px;border-radius:2px;">COMPANY LOGO</div>'
+    +     '<div style="font-family:\'Cinzel\',serif;font-size:5.5px;color:#c9a84c;margin-top:1px;">' + esc(d.brand) + '</div>'
+    +     '<div style="font-size:4.5px;color:#88bbdd;text-align:center;line-height:1.4;margin-top:1px;">' + esc(d.mktaddr) + '</div>'
     +   '</div>'
-    +   '<div class="box-wave"><svg viewBox="0 0 180 65" preserveAspectRatio="none" width="100%" height="100%"><path d="M0,28 Q45,8 90,28 Q135,48 180,28 L180,65 L0,65 Z" fill="#4db8ff"/><path d="M0,44 Q45,26 90,44 Q135,62 180,44 L180,65 L0,65 Z" fill="#0066cc"/></svg></div>'
+    +   '<div class="box-wave"><svg viewBox="0 0 175 65" preserveAspectRatio="none" width="100%" height="100%"><path d="M0,26 Q44,8 88,26 Q131,44 175,26 L175,65 L0,65 Z" fill="#4db8ff"/><path d="M0,42 Q44,26 88,42 Q131,58 175,42 L175,65 L0,65 Z" fill="#0066cc"/></svg></div>'
     + '</div></div>';
-
-  var mfgbyLines = d.mfgby.replace(/\n/g,'<br>');
-  var mktLines   = d.marketed.replace(/\n/g,'<br>');
 
   var RIGHT =
     '<div style="display:flex;flex-direction:column;">'
-    + '<div class="flap" style="width:100px;border-radius:6px 6px 0 0;">'
-    +   '<div style="font-family:\'Cinzel\',serif;font-size:6.5px;color:#c9a84c;letter-spacing:2px;">' + BU + '</div>'
-    +   '<div style="font-size:5px;color:#a0d4ff;letter-spacing:1px;">' + d.ptype.toUpperCase() + '</div>'
+    + '<div class="flap" style="width:95px;border-radius:6px 6px 0 0;">'
+    +   '<div style="font-family:\'Cinzel\',serif;font-size:6px;color:#c9a84c;letter-spacing:2px;">' + BU + '</div>'
+    +   '<div style="font-size:5px;color:#a0d4ff;letter-spacing:1px;">' + PTU.substring(0,14) + '</div>'
     + '</div>'
-    + '<div class="box-panel" style="width:100px;min-height:300px;padding:8px 6px;border-radius:0 0 5px 0;">'
-    +   '<div class="gstrip">' + d.effective + '</div>'
-    +   '<div class="bbrand" style="font-size:11px;text-align:center;margin-top:7px;">' + d.brand + '</div>'
-    +   '<div class="bsub" style="font-size:5px;text-align:center;">' + d.ptype + '</div>'
+    + '<div class="box-panel" style="width:95px;min-height:295px;padding:7px 5px;border-radius:0 0 5px 0;">'
+    +   '<div class="gstrip">' + esc(d.effective) + '</div>'
+    +   '<div class="bbrand" style="font-size:10px;text-align:center;margin-top:6px;">' + esc(d.brand) + '</div>'
+    +   '<div class="bsub" style="font-size:4.5px;text-align:center;">' + esc(d.ptype) + '</div>'
     +   '<div class="bshim"></div>'
-    +   '<div style="font-size:5.5px;color:#d0eaff;line-height:1.9;width:100%;margin-top:2px;">'
-    +     '<span style="color:#c9a84c;font-weight:700;">Mfg. Lic. No.:</span> ' + d.batch + '<br>'
-    +     '<span style="color:#c9a84c;font-weight:700;">Batch No.:</span> ' + d.expdate + '<br>'
-    +     '<span style="color:#c9a84c;font-weight:700;">Mfg. Date:</span> ' + d.mfgdate + '<br>'
-    +     '<span style="color:#c9a84c;font-weight:700;">Exp. Date:</span> ' + d.expmy + '<br>'
-    +     '<span style="color:#c9a84c;font-weight:700;">MRP:</span> ' + d.mrp + '<br>'
-    +     '<span style="font-size:5px;color:#88bbdd;">Incl. all taxes</span>'
+    +   '<div style="font-size:5px;color:#d0eaff;line-height:1.9;width:100%;margin-top:2px;">'
+    +     '<span style="color:#c9a84c;font-weight:700;">Mfg. Lic.:</span> ' + esc(d.batch) + '<br>'
+    +     '<span style="color:#c9a84c;font-weight:700;">Batch:</span> ' + esc(d.expdate) + '<br>'
+    +     '<span style="color:#c9a84c;font-weight:700;">Mfg. Date:</span> ' + esc(d.mfgdate) + '<br>'
+    +     '<span style="color:#c9a84c;font-weight:700;">Exp. Date:</span> ' + esc(d.expmy) + '<br>'
+    +     '<span style="color:#c9a84c;font-weight:700;">MRP:</span> ' + esc(d.mrp) + '<br>'
+    +     '<span style="font-size:4.5px;color:#88bbdd;">Incl. all taxes</span>'
     +   '</div>'
     +   '<div class="bshim"></div>'
-    +   '<div style="font-size:5.5px;color:#c9a84c;font-weight:700;letter-spacing:1px;text-align:center;margin-bottom:2px;">MARKETED BY</div>'
-    +   '<div style="font-size:5px;color:#88bbdd;text-align:center;line-height:1.5;">' + mktLines + '</div>'
-    +   '<div style="font-size:5.5px;color:#c9a84c;font-weight:700;letter-spacing:1px;text-align:center;margin:4px 0 2px;">MANUFACTURED BY</div>'
-    +   '<div style="font-size:5px;color:#88bbdd;text-align:center;line-height:1.5;">' + mfgbyLines + '</div>'
-    +   '<div class="bdot" style="width:28px;height:28px;bottom:38px;right:-7px;"></div>'
-    +   '<div class="box-wave"><svg viewBox="0 0 100 65" preserveAspectRatio="none" width="100%" height="100%"><path d="M0,28 Q25,8 50,28 Q75,48 100,28 L100,65 L0,65 Z" fill="#4db8ff"/></svg></div>'
+    +   '<div style="font-size:5px;color:#c9a84c;font-weight:700;text-align:center;margin-bottom:2px;">MARKETED BY</div>'
+    +   '<div style="font-size:4.5px;color:#88bbdd;text-align:center;line-height:1.5;">' + mktLines + '</div>'
+    +   '<div style="font-size:5px;color:#c9a84c;font-weight:700;text-align:center;margin:3px 0 2px;">MANUFACTURED BY</div>'
+    +   '<div style="font-size:4.5px;color:#88bbdd;text-align:center;line-height:1.5;">' + mfgLines + '</div>'
+    +   '<div class="bdot" style="width:26px;height:26px;bottom:36px;right:-6px;"></div>'
+    +   '<div class="box-wave"><svg viewBox="0 0 95 65" preserveAspectRatio="none" width="100%" height="100%"><path d="M0,26 Q24,8 48,26 Q71,44 95,26 L95,65 L0,65 Z" fill="#4db8ff"/></svg></div>'
     + '</div></div>';
 
-  if (!standalone) {
-    return LEFT + FRONT + BACK + RIGHT;
-  }
-  // standalone = full HTML page
-  return generateFullHTML(getData());
+  return LEFT + FRONT + BACK + RIGHT;
 }
 
-// ── GENERATE FULL STANDALONE HTML PAGE ───────────────────────────
-function generateFullHTML(d) {
+// ─────────────────────────────────────────────────────────────────
+// DOWNLOAD DESIGN AS STANDALONE HTML
+// ─────────────────────────────────────────────────────────────────
+function downloadDesign(id) {
+  var d = collectData(id);
   var css = '*{margin:0;padding:0;box-sizing:border-box;}'
     + "body{background:linear-gradient(135deg,#0d1b35 0%,#1a2a4a 100%);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 10px;font-family:'Montserrat',sans-serif;}"
-    + ".price-tag{font-family:'Cinzel',serif;font-size:20px;color:#c9a84c;letter-spacing:3px;margin-bottom:22px;}"
-    + '.box-wrap{display:flex;align-items:flex-start;filter:drop-shadow(0 20px 50px rgba(0,0,0,0.7));}'
+    + ".title{font-family:'Cinzel',serif;font-size:20px;color:#c9a84c;letter-spacing:3px;margin-bottom:22px;}"
+    + '.box-wrap{display:flex;align-items:flex-start;filter:drop-shadow(0 18px 45px rgba(0,0,0,0.7));}'
     + '.flap{height:52px;background:linear-gradient(180deg,#002460,#003a8c);border:1px solid rgba(77,184,255,0.25);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px;}'
     + '.box-panel{background:linear-gradient(170deg,#002d6b 0%,#0055b3 45%,#0066cc 75%,#002d6b 100%);border:1px solid rgba(77,184,255,0.2);position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;}'
     + '.gstrip{background:linear-gradient(90deg,#a07830,#e0c060,#c9a84c,#e0c060,#a07830);width:100%;padding:3px 6px;text-align:center;font-size:6.5px;font-weight:700;letter-spacing:1.5px;color:#1a0a00;text-transform:uppercase;}'
@@ -798,26 +681,61 @@ function generateFullHTML(d) {
     + '.bdot{position:absolute;border-radius:50%;background:rgba(77,184,255,0.1);pointer-events:none;}'
     + ".bbrand{font-family:'Playfair Display',serif;font-weight:900;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,0.4);}"
     + ".bsub{font-family:'Cinzel',serif;letter-spacing:3px;color:#c9a84c;text-transform:uppercase;}"
-    + '.bptype{font-size:7px;font-weight:600;color:#a0d4ff;letter-spacing:2px;text-transform:uppercase;text-align:center;}'
     + '.bshim{width:75%;height:1px;background:linear-gradient(90deg,transparent,#c9a84c,transparent);margin:4px auto;}'
     + '.bqbadge{border:1.5px solid #c9a84c;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(255,255,255,0.07);}'
-    + '.bing-row{display:flex;justify-content:space-between;margin-bottom:2px;}'
     + '.bcarea{width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(77,184,255,0.25);border-radius:3px;padding:5px;display:flex;flex-direction:column;align-items:center;}'
     + '.bpill{border:1px dashed rgba(77,184,255,0.3);border-radius:5px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(0,20,60,0.35);}';
 
-  var body = '<div class="price-tag">' + d.brand + ' · MRP ' + d.mrp + '</div>'
-    + '<div class="box-wrap">' + buildBoxHTML(d, false) + '</div>';
-
-  return '<!DOCTYPE html><html lang="en"><head>'
-    + '<meta charset="UTF-8"><title>' + d.brand + ' — ' + d.ptype + '</title>'
+  var html = '<!DOCTYPE html><html lang="en"><head>'
+    + '<meta charset="UTF-8"><title>' + d.name + ' — ' + d.ptype + '</title>'
     + '<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@400;600;700&family=Cinzel:wght@700&display=swap" rel="stylesheet">'
     + '<style>' + css + '</style>'
-    + '</head><body>' + body + '</body></html>';
+    + '</head><body>'
+    + '<div class="title">' + d.name + ' · MRP ' + d.mrp + '</div>'
+    + '<div class="box-wrap">' + buildBoxInnerHTML(d) + '</div>'
+    + '</body></html>';
+
+  var blob = new Blob([html], { type: 'text/html' });
+  var url  = URL.createObjectURL(blob);
+  var a    = document.createElement('a');
+  a.href = url;
+  a.download = d.name.replace(/\s+/g, '-').toLowerCase() + '.html';
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
-// ── BOOT: render initial preview ─────────────────────────────────
-liveUpdate();
-</script>
+// ─────────────────────────────────────────────────────────────────
+// ESCAPE HTML
+// ─────────────────────────────────────────────────────────────────
+function esc(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 
+// ─────────────────────────────────────────────────────────────────
+// BOOT — create 2 initial designs
+// ─────────────────────────────────────────────────────────────────
+addNewDesign(defaultData('Design 1'));
+
+var d2 = defaultData('Design 2');
+d2.brand     = 'Abraham';
+d2.qty       = '50Q';
+d2.ptype     = 'Premium Cream';
+d2.volume    = '50 ml';
+d2.effective = 'Premium Formula';
+d2.mrp       = '980 CAD';
+d2.batch     = 'MFG-CAN-AB-5010';
+d2.ingredients = [
+  { name: 'Hydrocortisone', amount: '5%'  },
+  { name: 'Aloe Vera',      amount: '30%' },
+  { name: 'Vitamin E',      amount: '10%' },
+  { name: 'Aqua Base',      amount: 'q.s.' }
+];
+addNewDesign(d2);
+
+// Initial previews
+designs.forEach(function(d){ liveUpdate(d.id); });
+
+</script>
 </body>
 </html>
